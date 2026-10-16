@@ -1,0 +1,1594 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>FacilityCore — Product Phase 1 build order</title>
+        <style>
+            :root {
+                --paper: #e9e2d6;
+                --sheet: #fbf8f3;
+                --ink: #1c1915;
+                --muted: #5c564c;
+                --line: #e3d9cb;
+                --line-strong: #cfc3b0;
+                --teal: #164e49;
+                --teal-bar: #1f6f68;
+                --teal-soft: #d5ebe7;
+                --amber: #7a4310;
+                --amber-bar: #c47a2a;
+                --amber-soft: #f6e4cc;
+                --navy: #1e3654;
+                --navy-bar: #2f5278;
+                --navy-soft: #d9e4f0;
+                --serif: Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+                --sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            }
+            * {
+                box-sizing: border-box;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+            body {
+                margin: 0;
+                background: var(--paper);
+                color: var(--ink);
+                font-family: var(--sans);
+                font-size: 15px;
+                line-height: 1.45;
+            }
+            button,
+            input {
+                font: inherit;
+                color: inherit;
+            }
+            :focus-visible {
+                outline: 2px solid var(--teal);
+                outline-offset: 2px;
+            }
+            .sheet {
+                max-width: 1180px;
+                margin: 28px auto 64px;
+                background: var(--sheet);
+                border: 1px solid var(--line-strong);
+                padding: 36px 40px 56px;
+            }
+            header.top {
+                border-bottom: 1px solid var(--line);
+                padding-bottom: 22px;
+            }
+            .kicker {
+                margin: 0 0 8px;
+                font-size: 12px;
+                letter-spacing: 0.14em;
+                text-transform: uppercase;
+                color: var(--teal);
+                font-weight: 650;
+            }
+            h1 {
+                font-family: var(--serif);
+                font-weight: 600;
+                font-size: 40px;
+                line-height: 1.05;
+                margin: 0 0 12px;
+                letter-spacing: -0.02em;
+            }
+            .deck {
+                margin: 0;
+                max-width: 78ch;
+                color: var(--ink);
+            }
+            .meta {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px 18px;
+                margin-top: 16px;
+                color: var(--muted);
+                font-size: 13px;
+            }
+            .meta b {
+                color: var(--ink);
+                font-weight: 650;
+            }
+            h2 {
+                font-family: var(--serif);
+                font-size: 28px;
+                font-weight: 600;
+                margin: 36px 0 8px;
+                letter-spacing: -0.02em;
+            }
+            h3 {
+                font-family: var(--serif);
+                font-size: 22px;
+                margin: 0 0 6px;
+                font-weight: 600;
+            }
+            h4 {
+                margin: 0;
+                font-size: 15.5px;
+                font-weight: 650;
+            }
+            p {
+                margin: 0 0 10px;
+            }
+            .lede {
+                max-width: 78ch;
+                color: var(--ink);
+            }
+            a {
+                color: var(--teal);
+            }
+            .toolbar {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                align-items: center;
+                margin: 18px 0 12px;
+            }
+            .toolbar button,
+            .flow button,
+            .gantt th.step {
+                background: transparent;
+                border: 1px solid var(--line-strong);
+                cursor: pointer;
+            }
+            .toolbar button {
+                padding: 6px 10px;
+                border-radius: 999px;
+                background: transparent;
+            }
+            .toolbar button[aria-pressed='true'] {
+                background: var(--ink);
+                color: var(--sheet);
+                border-color: var(--ink);
+            }
+            .toolbar button.print {
+                margin-left: auto;
+                padding: 6px 14px;
+                background: var(--teal);
+                color: #f7f4ee;
+                border: 0;
+                cursor: pointer;
+            }
+            .legend {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 14px 18px;
+                margin: 8px 0 14px;
+                font-size: 13px;
+                color: var(--muted);
+            }
+            .legend span {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+            .swatch {
+                width: 22px;
+                height: 10px;
+                border-radius: 99px;
+                display: inline-block;
+            }
+            .swatch.brd {
+                background: var(--teal-bar);
+            }
+            .swatch.add {
+                background: var(--amber-bar);
+            }
+            .swatch.seam {
+                background: var(--navy-bar);
+            }
+            .flow {
+                display: grid;
+                grid-template-columns: repeat(9, minmax(0, 1fr));
+                gap: 8px;
+                margin: 14px 0 6px;
+            }
+            .flow button {
+                text-align: left;
+                padding: 8px 8px 10px;
+                border-top: 3px solid var(--teal);
+                min-height: 92px;
+            }
+            .flow button .n {
+                font-family: var(--serif);
+                font-size: 18px;
+                display: block;
+                color: var(--teal);
+            }
+            .flow button strong {
+                display: block;
+                font-size: 12.5px;
+                line-height: 1.25;
+                margin: 2px 0 4px;
+            }
+            .flow button small {
+                display: block;
+                color: var(--muted);
+                font-size: 11px;
+                line-height: 1.3;
+            }
+            .note {
+                background: #f3eee4;
+                border-left: 3px solid var(--teal);
+                padding: 10px 12px;
+                margin: 14px 0;
+                max-width: 85ch;
+            }
+            .note strong {
+                font-weight: 650;
+            }
+            .gantt-scroll {
+                overflow-x: auto;
+                border: 1px solid var(--line);
+            }
+            table.gantt {
+                width: 100%;
+                min-width: 920px;
+                border-collapse: collapse;
+            }
+            .gantt th,
+            .gantt td {
+                border-bottom: 1px solid var(--line);
+                padding: 0;
+            }
+            .gantt thead th {
+                background: #f3eee6;
+                text-align: center;
+                padding: 8px 4px;
+                position: sticky;
+                top: 0;
+                z-index: 3;
+            }
+            .gantt thead th:first-child,
+            .gantt tbody th {
+                text-align: left;
+                padding: 6px 10px;
+                font-weight: 550;
+            }
+            .gantt thead th b {
+                display: block;
+                font-family: var(--serif);
+                font-size: 16px;
+                font-weight: 600;
+            }
+            .gantt thead th small {
+                display: block;
+                font-size: 10px;
+                letter-spacing: 0.04em;
+                text-transform: uppercase;
+                color: var(--muted);
+                font-weight: 650;
+            }
+            .gantt tbody th {
+                font-size: 13px;
+                width: 34%;
+            }
+            .gantt tr.group th {
+                background: #f6f1e8;
+                font-size: 11px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--muted);
+                padding: 8px 10px;
+                font-weight: 700;
+            }
+            .gantt td {
+                text-align: center;
+                height: 34px;
+            }
+            .gantt td .mark {
+                display: inline-block;
+                width: 70%;
+                max-width: 72px;
+                height: 12px;
+                border-radius: 99px;
+            }
+            .gantt td .mark.brd {
+                background: var(--teal-bar);
+            }
+            .gantt td .mark.add {
+                background: var(--amber-bar);
+            }
+            .gantt td .mark.seam {
+                background: var(--navy-bar);
+            }
+            .gantt tr.hot td,
+            .gantt tr.hot th {
+                background: #f4f7f4;
+            }
+            .gantt[data-focus='1'] td[data-step='1'],
+            .gantt[data-focus='1'] th[data-step='1'],
+            .gantt[data-focus='2'] td[data-step='2'],
+            .gantt[data-focus='2'] th[data-step='2'],
+            .gantt[data-focus='3'] td[data-step='3'],
+            .gantt[data-focus='3'] th[data-step='3'],
+            .gantt[data-focus='4'] td[data-step='4'],
+            .gantt[data-focus='4'] th[data-step='4'],
+            .gantt[data-focus='5'] td[data-step='5'],
+            .gantt[data-focus='5'] th[data-step='5'],
+            .gantt[data-focus='6'] td[data-step='6'],
+            .gantt[data-focus='6'] th[data-step='6'],
+            .gantt[data-focus='7'] td[data-step='7'],
+            .gantt[data-focus='7'] th[data-step='7'],
+            .gantt[data-focus='8'] td[data-step='8'],
+            .gantt[data-focus='8'] th[data-step='8'],
+            .gantt[data-focus='9'] td[data-step='9'],
+            .gantt[data-focus='9'] th[data-step='9'] {
+                background: #e7f1ef;
+            }
+            .tag {
+                display: inline-block;
+                font-size: 10px;
+                letter-spacing: 0.08em;
+                font-weight: 750;
+                padding: 2px 6px;
+                border-radius: 999px;
+                margin-right: 6px;
+                vertical-align: 1px;
+            }
+            .tag.brd {
+                background: var(--teal-soft);
+                color: var(--teal);
+            }
+            .tag.add {
+                background: var(--amber-soft);
+                color: var(--amber);
+            }
+            .tag.seam {
+                background: var(--navy-soft);
+                color: var(--navy);
+            }
+            .pill {
+                display: inline-block;
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.06em;
+                text-transform: uppercase;
+                padding: 2px 7px;
+                border-radius: 999px;
+            }
+            .pill.now {
+                background: var(--teal-soft);
+                color: var(--teal);
+            }
+            .pill.later {
+                background: var(--navy-soft);
+                color: var(--navy);
+            }
+            .pill.out,
+            .pill.wait {
+                background: #efe6dc;
+                color: #5c4632;
+            }
+            .steps {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+                margin-top: 8px;
+            }
+            article.step {
+                border: 1px solid var(--line);
+                padding: 16px 16px 8px;
+                break-inside: avoid;
+            }
+            .pass {
+                background: #f3eee4;
+                padding: 8px 10px;
+                margin: 8px 0 12px;
+            }
+            ol.clean {
+                margin: 8px 0 14px;
+                padding: 0;
+                list-style: none;
+            }
+            ol.clean > li {
+                border-top: 1px solid var(--line);
+                padding: 10px 0 8px;
+                break-inside: avoid;
+            }
+            .feat-head {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 6px 10px;
+                align-items: baseline;
+            }
+            .req {
+                margin-left: auto;
+                color: var(--muted);
+                font-size: 12px;
+            }
+            ul.points {
+                margin: 6px 0 0;
+                padding-left: 18px;
+            }
+            ul.points li {
+                margin: 2px 0;
+            }
+            table.plain {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 14px;
+            }
+            table.plain th,
+            table.plain td {
+                border-bottom: 1px solid var(--line);
+                text-align: left;
+                vertical-align: top;
+                padding: 8px 8px;
+            }
+            table.plain th {
+                font-size: 11px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--muted);
+                font-weight: 700;
+            }
+            .later {
+                display: grid;
+                grid-template-columns: 1.4fr 0.8fr;
+                gap: 18px;
+                align-items: start;
+            }
+            .rail {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+            }
+            .rail li {
+                display: grid;
+                grid-template-columns: 36px 1fr;
+                gap: 10px;
+                padding-bottom: 12px;
+            }
+            .rail .num {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: var(--navy);
+                color: #f7f4ee;
+                font-family: var(--serif);
+                font-size: 16px;
+            }
+            .side {
+                background: #f6f1e8;
+                padding: 12px 14px;
+                border-top: 3px solid var(--amber-bar);
+            }
+            footer.end {
+                margin-top: 28px;
+                padding-top: 12px;
+                border-top: 1px solid var(--line);
+                color: var(--muted);
+                font-size: 12px;
+            }
+            @media (max-width: 900px) {
+                .sheet {
+                    margin: 0;
+                    border: 0;
+                    padding: 20px 16px 40px;
+                }
+                h1 {
+                    font-size: 32px;
+                }
+                .flow {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+                .later {
+                    grid-template-columns: 1fr;
+                }
+                .print {
+                    margin-left: 0;
+                }
+            }
+            @media print {
+                body {
+                    background: white;
+                }
+                .sheet {
+                    margin: 0;
+                    max-width: none;
+                    border: 0;
+                    padding: 0;
+                }
+                .toolbar,
+                .print {
+                    display: none !important;
+                }
+                .gantt-scroll {
+                    overflow: visible;
+                    border: 0;
+                }
+                table.gantt {
+                    min-width: 0;
+                }
+                thead {
+                    display: table-header-group;
+                }
+                tr,
+                .note,
+                ol.clean > li,
+                .rail li {
+                    break-inside: avoid;
+                }
+                article.step {
+                    break-inside: auto;
+                }
+                article.step > .kicker,
+                article.step > h3,
+                article.step > p {
+                    break-after: avoid;
+                }
+                h2,
+                h3 {
+                    break-after: avoid;
+                }
+                .flow {
+                    grid-template-columns: repeat(3, minmax(0, 1fr));
+                }
+                .later {
+                    grid-template-columns: 1fr;
+                }
+                .screen-only {
+                    display: none !important;
+                }
+                a {
+                    text-decoration: none;
+                    color: inherit;
+                }
+                .mark,
+                .tag,
+                .pill,
+                .swatch,
+                .flow button,
+                .rail .num,
+                .side,
+                .pass,
+                .note {
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+            }
+            @page {
+                size: A4 landscape;
+                margin: 12mm;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="sheet">
+            <header class="top">
+                <p class="kicker">FacilityCore · Building Maintenance Software · Product Phase 1</p>
+                <h1>What to build before services</h1>
+                <p class="deck">
+                    Services are the business. This chart is the society product that has to exist
+                    first: bills, zero-fee UPI, late fees, complaints, and the records a Mumbai
+                    society already keeps. Each column is a build step. There are no weeks and no
+                    dates. Services, the gate, and face check stay off until step 9 passes.
+                </p>
+                <div class="meta">
+                    <span><b>Source</b> BRD v2.0 and the gap analysis, 17 October 2026</span>
+                    <span><b>Market</b> Mumbai Metropolitan Region</span>
+                    <span><b>Axis</b> Build order, not a calendar</span>
+                    <span><b id="counts"></b></span>
+                </div>
+            </header>
+
+            <h2>How to read this</h2>
+            <p class="lede">
+                Product Phase 1 is the whole core app. Inside it, nine steps follow the BRD. BRD
+                phase 6 (automatic WhatsApp), priced services, and the gate sit after this phase.
+                Local vendors do not: no phonebook and no 2 km directory, in these nine steps or
+                after them. A mark on the chart means “build this feature in this step”.
+                Finish a step and pass its check before starting the next. Hindi and Marathi cover
+                every screen as that screen is built. The language choice itself is step 1.
+            </p>
+            <div class="flow" id="flow"></div>
+            <div class="note" id="decisions"></div>
+
+            <h2>Build-order chart</h2>
+            <p class="lede">
+                Read left to right. The staircase is the sequence. Amber marks are additions for MMR
+                societies or for money safety. Navy marks are seams so a later service cannot
+                rewrite the ledger.
+            </p>
+            <div class="toolbar">
+                <button type="button" data-filter="all" aria-pressed="true">All</button>
+                <button type="button" data-filter="brd" aria-pressed="false">BRD</button>
+                <button type="button" data-filter="add" aria-pressed="false">MMR and safety</button>
+                <button type="button" data-filter="seam" aria-pressed="false">
+                    Extension seams
+                </button>
+                <button type="button" class="print" id="print">Print / save as PDF</button>
+            </div>
+            <div class="legend">
+                <span><i class="swatch brd"></i> BRD — required by Version 2.0</span>
+                <span><i class="swatch add"></i> ADD — MMR practice or a money-safety gap</span>
+                <span
+                    ><i class="swatch seam"></i> SEAM — reserved so services can attach later</span
+                >
+            </div>
+            <div class="gantt-scroll">
+                <table class="gantt" id="gantt"></table>
+            </div>
+            <p
+                class="lede screen-only"
+                style="margin-top: 8px; color: var(--muted); font-size: 13px"
+            >
+                Click a column heading to jump to that step. Click a feature name to jump to its
+                checks. For PDF: Print, A4 landscape, background graphics on.
+            </p>
+
+            <h2>Step by step</h2>
+            <p class="lede">
+                These checks are the build. A step is done when they pass in a test, and on the
+                screen a resident or treasurer actually uses.
+            </p>
+            <div class="steps" id="steps"></div>
+
+            <h2>MMR facilities, compared</h2>
+            <p class="lede" id="mmr-intro"></p>
+            <table class="plain" id="compare"></table>
+
+            <h2>Gap analysis</h2>
+            <p class="lede">
+                Local vendors are held out of this plan end to end. That covers the Local Help
+                phonebook and vendors within 2 km, on the chart and in the sequence after step 9.
+                Clean-up, maids, plant care, and the gate stay after step 9. Additions that belong
+                in this phase are already amber or navy on the chart.
+            </p>
+            <h3 style="margin-top: 18px">Inside steps 1–9</h3>
+            <table class="plain" id="added"></table>
+            <div class="later" style="margin-top: 22px">
+                <div>
+                    <h3>After step 9, still in order</h3>
+                    <ol class="rail" id="later"></ol>
+                </div>
+                <div class="side" id="side"></div>
+            </div>
+
+            <footer class="end">
+                FacilityCore · Product Phase 1 build order · BRD v2.0 · no calendar dates · guards
+                have no login in this phase · service payments stay off the maintenance ledger
+            </footer>
+        </div>
+        <script>
+            const steps = [
+                {
+                    id: 1,
+                    title: 'Foundation',
+                    brd: 'BRD phase 1',
+                    purpose:
+                        'A person can sign in, see only their role, and the society’s flats and old dues are in the system.',
+                    pass: 'The admin loads flats, people, and opening balances. Each person logs in, sees their own language, and cannot open another role’s data. The opening-balance total matches the paper register before it is saved.',
+                },
+                {
+                    id: 2,
+                    title: 'Bills',
+                    brd: 'BRD phase 2',
+                    purpose:
+                        'Every flat gets one itemised monthly bill, including the extra charges a Mumbai society actually raises.',
+                    pass: 'A draft bill is itemised, reviewed, and sent once. Running generation again does not create a second bill. A fund line and a one-time tanker levy can appear on that bill.',
+                },
+                {
+                    id: 3,
+                    title: 'Collection',
+                    brd: 'BRD phase 2',
+                    purpose:
+                        'Maintenance moves from the resident’s bank to the society’s bank with no gateway fee, and the treasurer can match it.',
+                    pass: 'A resident pays by UPI, submits the reference, and the treasurer confirms. The balance drops and a receipt exists. The same reference cannot clear a second bill. A bounced cheque reopens the bill.',
+                },
+                {
+                    id: 4,
+                    title: 'Accounts',
+                    brd: 'BRD phase 2',
+                    purpose:
+                        'The flat has a statement, a receipt, a no-dues certificate, and the papers that change when someone moves.',
+                    pass: 'The resident downloads a receipt. A no-dues certificate is created only when the balance is zero. An interior-work deposit does not change the maintenance balance.',
+                },
+                {
+                    id: 5,
+                    title: 'Discipline',
+                    brd: 'BRD phase 3',
+                    purpose:
+                        'Unpaid bills grow a late fee by the society’s rule, reminders go out, and the committee can see who is overdue.',
+                    pass: 'An unpaid ₹3,000 bill at 0.05% growing matches ₹3,001.50 on the first late day and ₹3,015.03 after 10 late days, to the paisa. A reported payment pauses the fee. A confirmed payment stops it. SMS follows the reminder schedule. A resident cannot open the defaulter list.',
+                },
+                {
+                    id: 6,
+                    title: 'Helpdesk',
+                    brd: 'BRD phase 4, local vendors held out',
+                    purpose: 'Complaints reach the manager, not the guard.',
+                    pass: 'A complaint appears on the admin dashboard and not with a guard. Each status change notifies the resident. An unsolved complaint reminds the facility manager after 3 days and the admin after 7 days. There is no vendor list and no click-to-call directory.',
+                },
+                {
+                    id: 7,
+                    title: 'Community',
+                    brd: 'BRD phase 5',
+                    purpose:
+                        'Polls, SOS, notices, and the society’s own documents live in the app.',
+                    pass: 'SOS is handed to the SMS provider within 10 seconds with the flat number and phone, to the admin, the facility manager, and the duty-guard number. Poll totals update as votes arrive. A water-shutdown notice shows on the home screen. A fire-NOC date inside 30 days shows on the dashboard.',
+                },
+                {
+                    id: 8,
+                    title: 'Reports',
+                    brd: 'BRD phase 7',
+                    purpose:
+                        'The committee can trust the numbers, export them, and recover from a backup.',
+                    pass: 'Excel totals match the ledger. A backup restores. The April–March export lists fund totals apart from ordinary maintenance. A call from the wrong role is refused.',
+                },
+                {
+                    id: 9,
+                    title: 'Ready to extend',
+                    brd: 'BRD phase 7, add-ons held',
+                    purpose:
+                        'The product can take services later without mixing provider money into dues.',
+                    pass: 'With every add-on flag off, the resident sees no booking screen, no visitor screen, and no vendor directory. A provider-payment row cannot reduce dues. An admin can add a charge item and a complaint category without a code change.',
+                },
+            ];
+
+            const features = [
+                {
+                    id: 'F01',
+                    step: 1,
+                    kind: 'brd',
+                    name: 'OTP, roles, and language',
+                    req: 'REQ-4.1, 4.6.1, 4.6.2',
+                    points: [
+                        'Login is a mobile number and an SMS OTP. There is no password. The session stays until logout.',
+                        'The first open asks for English, Hindi, or Marathi, remembers it, and Profile can change it.',
+                        'Roles are Resident, Treasurer, Builder/Admin, and Facility Manager. Each token can call only that role’s actions.',
+                        'Security guards do not have accounts in this phase.',
+                    ],
+                },
+                {
+                    id: 'F02',
+                    step: 1,
+                    kind: 'brd',
+                    name: 'Society rules and UPI ID',
+                    req: 'REQ-4.6.3, Decision 3',
+                    points: [
+                        'Admin saves the society name, bill date (default the 1st), payment window from 5 to 10 days (default 10), late-fee type, daily rate, and an optional cap.',
+                        'The window is the only grace. There is no second grace on top of it.',
+                        'The society UPI ID is stored as a VPA. The screen checks that it contains @. The app never asks for a UPI PIN or a bank password.',
+                        'Starting selection for late-fee type is Simple, with the cap left for the society to fill. Growing stays available. The Step 5 test runs the BRD’s growing example.',
+                    ],
+                },
+                {
+                    id: 'F03',
+                    step: 1,
+                    kind: 'brd',
+                    name: 'Flats, people, and Excel',
+                    req: 'REQ-4.6.4, 4.8.3, 4.8.5',
+                    points: [
+                        'Admin adds a flat or uploads a sheet with wing, flat number, category, owner, owner phone, tenant, tenant phone, bill payer, and extra phones.',
+                        'The owner is the bill payer until an admin switches that flat to the tenant.',
+                        'One phone can hold several flats, each with its own bill. Extra numbers on a flat can view, pay, and complain. Only the bill payer receives reminders.',
+                        'Changing a phone or replacing the treasurer keeps earlier history under the original name.',
+                    ],
+                },
+                {
+                    id: 'F04',
+                    step: 1,
+                    kind: 'brd',
+                    name: 'Opening balances',
+                    req: 'REQ-4.8.1',
+                    points: [
+                        'The sheet includes the old due or advance and the as-of date.',
+                        'The statement’s first line is Opening balance.',
+                        'No late fee runs on that balance unless the admin opts in for that flat.',
+                        'A check screen shows the society total before save.',
+                    ],
+                },
+                {
+                    id: 'F05',
+                    step: 1,
+                    kind: 'add',
+                    name: 'Wings, towers, and flat categories',
+                    req: 'MMR addition',
+                    points: [
+                        'Every flat belongs to a wing or tower.',
+                        'Category is 1RK, 1BHK, 2BHK, 3BHK, penthouse, shop, or a label the society adds.',
+                        'A shop can carry a different charge schedule from a flat in the same wing.',
+                    ],
+                },
+                {
+                    id: 'F06',
+                    step: 1,
+                    kind: 'add',
+                    name: 'Parking slots and vehicles',
+                    req: 'MMR addition',
+                    points: [
+                        'Admin records a slot with wing, label, and vehicle type, and can link it to a flat.',
+                        'Admin records a vehicle with plate and sticker number. The flat’s residents see their own vehicles.',
+                        'There is no boom barrier, no camera, and no guard login. The register is here so parking charges and a later gate reuse the same records.',
+                    ],
+                },
+                {
+                    id: 'F07',
+                    step: 1,
+                    kind: 'add',
+                    name: 'Builder hands over to a secretary',
+                    req: 'Extends REQ-4.8.5',
+                    points: [
+                        'Builder/Admin can give the admin role to a secretary and remove it from the builder account.',
+                        'The duty-guard mobile is a phone number used for SOS, not a user account.',
+                        'Money history stays with the person who performed each action.',
+                    ],
+                },
+                {
+                    id: 'F08',
+                    step: 2,
+                    kind: 'brd',
+                    name: 'Monthly charge catalogue',
+                    req: 'REQ-4.2.1, 4.6.3',
+                    points: [
+                        'Admin keeps charge items such as base maintenance, lift AMC, CCTV, security salaries, and common electricity.',
+                        'An item has an amount per flat or per category. Different flat sizes can differ.',
+                        'Each line also stores optional quantity and rate, left empty. A later water-meter bill can fill them without a new bill table.',
+                        'A sent bill lists every charge on its own line.',
+                    ],
+                },
+                {
+                    id: 'F09',
+                    step: 2,
+                    kind: 'add',
+                    name: 'Funds, levies, non-occupancy, parking',
+                    req: 'MMR addition',
+                    points: [
+                        'Each charge has a kind: monthly, annual, fund, or one-time levy. The BRD already allows any name. The kind is what reports and bill runs use.',
+                        'Fund covers sinking fund and repair fund. They can appear every month and be totalled apart from ordinary maintenance.',
+                        'Annual appears only in the month the admin chooses, such as April. A one-time levy (tanker water, festival collection, special repair) is applied to chosen flats for one month.',
+                        'Non-occupancy is off until the committee sets a rate. It is added only on flats the admin marks as let out. The software ships no legal percentage.',
+                        'A parking charge can point at a slot from F06.',
+                    ],
+                },
+                {
+                    id: 'F10',
+                    step: 2,
+                    kind: 'brd',
+                    name: 'Draft, review, send, correct',
+                    req: 'REQ-4.7.4, 4.7.8',
+                    points: [
+                        'On the bill date the system drafts one bill per flat from the charge list, including any levy and fund lines due that month.',
+                        'Treasurer or admin reviews and presses Send. Residents cannot see a draft.',
+                        'A sent bill is corrected only by a recorded adjustment with the person, the time, and the reason.',
+                        'Status is stored as Draft, Sent, Partially paid, Awaiting confirmation, or Paid. Overdue is calculated from the balance and the window, not stored as a second balance.',
+                    ],
+                },
+                {
+                    id: 'F11',
+                    step: 2,
+                    kind: 'add',
+                    name: 'Bill run cannot double-charge',
+                    req: 'Money-safety gap',
+                    points: [
+                        'One flat has at most one bill for a given month.',
+                        'The check is to run generation twice and still have a single bill.',
+                        'A failed run can be repeated safely.',
+                    ],
+                },
+                {
+                    id: 'F12',
+                    step: 3,
+                    kind: 'brd',
+                    name: 'UPI Intent and QR',
+                    req: 'REQ-4.2.3, Section 3.1',
+                    points: [
+                        'Pay Now opens the phone’s UPI app with the society VPA, payee name, and the exact amount due.',
+                        'The UPI note carries the flat number so the bank statement is easier to match.',
+                        'If no UPI app opens, the resident sees a QR and the UPI ID.',
+                        'From Home, the UPI app is at most 3 taps away. Pay Now opens in under 2 seconds on a normal connection.',
+                        'When the amount is above the usual per-payment UPI limit, the screen says so and points to a part payment or an offline payment with the treasurer. No card gateway is added.',
+                    ],
+                },
+                {
+                    id: 'F13',
+                    step: 3,
+                    kind: 'brd',
+                    name: 'UTR, confirm, or reject',
+                    req: 'REQ-4.7.1, 4.7.2, Decision 2 and 9',
+                    points: [
+                        'The resident taps I have paid, enters the UPI reference, and may attach one screenshot.',
+                        'The bill shows Awaiting confirmation and the late-fee job adds nothing while it waits.',
+                        'The treasurer checks the society bank record and taps Confirm or Reject with a reason.',
+                        'Confirm updates the ledger and stops the late fee. Reject tells the resident, and the waiting days count.',
+                        'The payment row keeps a field for a future bank-statement match. Matching stays manual in this phase.',
+                    ],
+                },
+                {
+                    id: 'F14',
+                    step: 3,
+                    kind: 'add',
+                    name: 'Block a reused UTR',
+                    req: 'Money-safety gap',
+                    points: [
+                        'A reference already sitting on a pending or confirmed payment cannot be submitted again.',
+                        'A rejected reference can be corrected and sent again.',
+                        'The check is two flats submitting one reference: the second is refused.',
+                    ],
+                },
+                {
+                    id: 'F15',
+                    step: 3,
+                    kind: 'brd',
+                    name: 'Cash, cheque, and repairs',
+                    req: 'REQ-4.2.5, 4.8.2',
+                    points: [
+                        'Treasurer or admin records cash or cheque with amount, date, mode, and cheque number. The resident receives a receipt.',
+                        'A bounced cheque reopens the bill. Late fees run from the original due date. An optional bounce charge can be added as a line.',
+                        'A short payment leaves the balance. An extra payment becomes advance on the next bill, or a recorded refund.',
+                        'A payment posted to the wrong flat is moved, with a reason.',
+                        'Payment rows are never deleted. A mistake is a new reversing entry.',
+                    ],
+                },
+                {
+                    id: 'F16',
+                    step: 4,
+                    kind: 'brd',
+                    name: 'Statement and PDF receipt',
+                    req: 'REQ-4.7.3',
+                    points: [
+                        'The resident sees bills, payments, late fees, adjustments, and the current balance in one list.',
+                        'A receipt PDF uses the resident’s language and shows society, flat, mode, amount, and balance.',
+                        'The PDF can be downloaded from the app.',
+                    ],
+                },
+                {
+                    id: 'F17',
+                    step: 4,
+                    kind: 'brd',
+                    name: 'Move-out and no-dues',
+                    req: 'REQ-4.8.4',
+                    points: [
+                        'Admin enters a move-out or sale date and sees what is still due. Dues stay on the flat.',
+                        'A No Dues Certificate PDF can be created only when the balance is zero.',
+                        'The certificate names the flat, the date, and the society.',
+                    ],
+                },
+                {
+                    id: 'F18',
+                    step: 4,
+                    kind: 'add',
+                    name: 'Tenancy papers on the flat',
+                    req: 'Prepares REQ-4.15.5',
+                    points: [
+                        'Admin or the owner can store the rental agreement and a police-verification record, with a date.',
+                        'FacilityCore does not perform police verification. It only keeps the file the society already collected.',
+                        'Other flats cannot open the file. The gate add-on stays off. The later gate step can require this file before access.',
+                    ],
+                },
+                {
+                    id: 'F19',
+                    step: 4,
+                    kind: 'add',
+                    name: 'Interior-work deposit',
+                    req: 'MMR addition',
+                    points: [
+                        'A resident submits work dates. Admin approves or refuses.',
+                        'A refundable deposit is stored on its own list. It is not income, not a maintenance charge, and not a late-fee base.',
+                        'The check: creating or refunding a deposit leaves the flat’s maintenance balance unchanged.',
+                    ],
+                },
+                {
+                    id: 'F20',
+                    step: 5,
+                    kind: 'brd',
+                    name: 'Late-fee engine and waiver',
+                    req: 'REQ-4.2.4, 4.7.2, 4.7.7, Section 6',
+                    points: [
+                        'Fees start the day after the window: Day 11 when the window is 10, Day 6 when it is 5.',
+                        'Simple: late fee = unpaid principal × daily rate × late days. Growing: amount due = principal × (1 + daily rate) ^ late days.',
+                        'The growing test uses ₹3,000 at 0.05% per day: ₹3,001.50 on the first late day, ₹3,015.03 after 10 late days.',
+                        'A cap, when the society sets one, stops the fee. Amounts are kept to the paisa and shown with two decimals.',
+                        'Incoming money clears late fees first, then the oldest bill. Advance is applied on the next bill.',
+                        'Only Builder/Admin can waive a late fee, and only with a written reason saved in the history.',
+                        'Before the pilot, the committee reads its bye-laws and confirms the type and the cap. Many Maharashtra society bye-laws allow simple interest up to a yearly limit.',
+                    ],
+                },
+                {
+                    id: 'F21',
+                    step: 5,
+                    kind: 'brd',
+                    name: 'SMS and in-app reminders',
+                    req: 'REQ-4.7.5, 4.9.1, Section 7',
+                    points: [
+                        'The bill payer is messaged when the bill is sent, 3 days before the last date, on the last date, when the late fee starts, and once a week while a balance remains.',
+                        'This phase sends SMS and an in-app notification, in the person’s language, through a DLT-registered sender.',
+                        'The society can switch a reminder off. OTP uses the same SMS path.',
+                        'Message text is stored as data so a later service message does not need a new table.',
+                    ],
+                },
+                {
+                    id: 'F22',
+                    step: 5,
+                    kind: 'brd',
+                    name: 'Share on WhatsApp',
+                    req: 'REQ-4.9.1',
+                    points: [
+                        'Every bill and receipt has a button that opens WhatsApp with the message already written.',
+                        'The resident sends it themselves. The WhatsApp Business API is not called in this phase.',
+                    ],
+                },
+                {
+                    id: 'F23',
+                    step: 5,
+                    kind: 'add',
+                    name: 'Defaulter list for the committee',
+                    req: 'MMR addition on REQ-4.7.6',
+                    points: [
+                        'Treasurer and admin can open and export flats with an overdue balance.',
+                        'A resident token cannot read that list.',
+                        'The app does not post names to other residents or to a lobby display.',
+                    ],
+                },
+                {
+                    id: 'F24',
+                    step: 6,
+                    kind: 'brd',
+                    name: 'Helpdesk, photo, and SLA',
+                    req: 'REQ-4.4',
+                    points: [
+                        'The resident picks a category and may attach one photo, plus an optional one-line place such as “bathroom”.',
+                        'The ticket is visible to Builder/Admin and Facility Manager. It is not sent to the guard.',
+                        'Status moves Pending, In progress, Resolved. The resident is notified on each change.',
+                        'Still pending after 3 days: a reminder to the facility manager. After 7 days: a reminder to the admin.',
+                        'Within 7 days of Resolved, the resident can tap Not fixed and the ticket reopens.',
+                    ],
+                },
+                {
+                    id: 'F25',
+                    step: 6,
+                    kind: 'add',
+                    name: 'MMR complaint categories',
+                    req: 'MMR addition',
+                    points: [
+                        'The starting list is plumbing, electrical, lift, drainage choke, seepage, water supply, DG and power backup, parking, noise, and common-area cleaning.',
+                        'Admin can add a category. Categories are data, so the list can grow without a release.',
+                    ],
+                },
+                {
+                    id: 'F27',
+                    step: 7,
+                    kind: 'brd',
+                    name: 'Polls',
+                    req: 'REQ-4.5.1',
+                    points: [
+                        'Admin sends a yes/no question with a closing time.',
+                        'Suggested rule, saved as a society setting: one vote per flat, cast by the bill payer.',
+                        'Results update as votes arrive, and a resident sees that their flat has voted.',
+                    ],
+                },
+                {
+                    id: 'F28',
+                    step: 7,
+                    kind: 'brd',
+                    name: 'Emergency SOS',
+                    req: 'REQ-4.5.2',
+                    points: [
+                        'The home screen has a clear SOS control. The resident picks medical, fire, or security.',
+                        'SMS goes to the admin, the facility manager, and the duty-guard number, with flat and callback phone.',
+                        'The handoff to the SMS provider is tested against a 10-second limit.',
+                        'The guard still has no login. The alert is a message.',
+                    ],
+                },
+                {
+                    id: 'F29',
+                    step: 7,
+                    kind: 'add',
+                    name: 'Notice board',
+                    req: 'MMR addition',
+                    points: [
+                        'Admin publishes a notice: water shutdown, tanker arrival, lift maintenance, meeting, or a general note.',
+                        'Current notices show on the resident home screen in their language.',
+                        'A notice does not create a bill and does not collect a vote. A later service camp can be announced here without a group-buy engine.',
+                    ],
+                },
+                {
+                    id: 'F30',
+                    step: 7,
+                    kind: 'add',
+                    name: 'Document vault and due dates',
+                    req: 'MMR addition',
+                    points: [
+                        'Admin uploads bye-laws, occupancy certificate, fire NOC, lift licence, insurance, and meeting minutes. Residents of the society can read them.',
+                        'Admin records a date for lift AMC, fire NOC, building insurance, and the AGM.',
+                        'The dashboard lists items due within 30 days. This reminds the committee. It does not book a job.',
+                    ],
+                },
+                {
+                    id: 'F31',
+                    step: 8,
+                    kind: 'brd',
+                    name: 'Dashboard, Excel, and history',
+                    req: 'REQ-4.7.6, 4.7.8',
+                    points: [
+                        'The dashboard shows collected, pending, overdue, late fees added, and payments awaiting confirmation, in total and by flat.',
+                        'Those reports download to Excel.',
+                        'Money-change history lists every bill, adjustment, payment, confirm, reject, and waiver with who and when.',
+                        'History rows cannot be edited or deleted.',
+                    ],
+                },
+                {
+                    id: 'F32',
+                    step: 8,
+                    kind: 'add',
+                    name: 'Financial-year export',
+                    req: 'MMR addition',
+                    points: [
+                        'Reports filter by Indian financial year, April to March, as well as by month.',
+                        'A year pack lists bills, receipts, adjustments, outstanding, and totals by fund kind.',
+                        'The pack is an export for the society’s chartered accountant. It is not a balance sheet and not a GST return.',
+                    ],
+                },
+                {
+                    id: 'F33',
+                    step: 8,
+                    kind: 'brd',
+                    name: 'Backup, speed, and role tests',
+                    req: 'Section 9',
+                    points: [
+                        'A backup runs every day, is kept 30 days, and a restore is tested.',
+                        'Main screens open in under 3 seconds on a normal mobile connection.',
+                        'A bill already opened can be read with no connection. Pay, complaints, and SOS need a connection.',
+                        'Resident app targets Android 8 or newer. The admin dashboard runs in current Chrome and Edge.',
+                        'Availability target for the core is 99.5%.',
+                    ],
+                },
+                {
+                    id: 'F34',
+                    step: 8,
+                    kind: 'brd',
+                    name: 'Privacy baseline',
+                    req: 'Section 9',
+                    points: [
+                        'The core keeps name, phone, flat, and the files the society uploaded.',
+                        'Data is protected in transit and at rest. Phone numbers are hidden from other residents.',
+                        'Profile shows the grievance contact. A resident can ask to see their data, and the request is stored for that contact.',
+                        'The society can download its data.',
+                        'Hosting for the database and files is in an Indian region.',
+                    ],
+                },
+                {
+                    id: 'F35',
+                    step: 9,
+                    kind: 'seam',
+                    name: 'Flags, ledgers, and data-shaped lists',
+                    req: 'Section 3, Decision 1 and 13',
+                    points: [
+                        'Flags for services, gate, face check, and automatic WhatsApp exist and are off.',
+                        'Home shows the current bill, Pay Now, SOS, Helpdesk, Polls, and Notices. There is no Local Help, no vendor list, no booking, and no Visitors.',
+                        'Admin navigation is Dashboard, Flats, Bills, Payments, Late fees, Complaints, Polls, Notices, Documents, Reports, Settings, and Money history. There is no vendor manager.',
+                        'There is no vendor table, no phonebook, and no distance search.',
+                        'A provider-payment table exists with no screen, ready for a later priced service. A rule refuses to apply that money to dues or late fees. Society UPI ID and provider UPI ID are different fields.',
+                        'Every business table carries a society id. One society is live.',
+                        'Charge items, complaint categories, notice types, and message texts are data.',
+                        'Complaint photos, UTR screenshots, and vault files use one file store.',
+                        'A consent table exists and can stay empty. Later rows will cover WhatsApp and face check.',
+                    ],
+                },
+            ];
+
+            const compare = [
+                [
+                    'Maintenance billing and zero-fee UPI',
+                    'Committees resist a 1.5–2% gateway cut on dues.',
+                    'now',
+                    'Steps 2–3, BRD',
+                ],
+                [
+                    'Late fee inside the bye-laws',
+                    'Model bye-laws often allow simple interest up to a yearly cap. A compounding default can be challenged.',
+                    'now',
+                    'Step 5, Simple selected until the bye-laws are read',
+                ],
+                [
+                    'Sinking fund and repair fund',
+                    'Maharashtra societies collect these apart from ordinary maintenance.',
+                    'now',
+                    'Step 2, fund kind',
+                ],
+                [
+                    'Festival collection and tanker water',
+                    'Ganpati, Navratri, and tanker rounds are real bills, and they are not monthly.',
+                    'now',
+                    'Step 2, one-time levy',
+                ],
+                [
+                    'Non-occupancy on let-out flats',
+                    'MMR towers have heavy rental churn. The rate is the society’s, after it checks its bye-laws.',
+                    'now',
+                    'Step 2, off until set',
+                ],
+                [
+                    'Parking slots and stickers',
+                    'Parking is scarce and is usually charged. The gate can come years later.',
+                    'now',
+                    'Steps 1–2, no hardware',
+                ],
+                [
+                    'Wings, towers, and shops',
+                    'Large societies and mixed-use streets need different rates in one compound.',
+                    'now',
+                    'Step 1',
+                ],
+                [
+                    'Seepage, choke, water, lift, DG',
+                    'Monsoon and high-rise failures are the weekly complaint load.',
+                    'now',
+                    'Step 6',
+                ],
+                [
+                    'Water, tanker, and lift notices',
+                    'Shutdowns are announced several times a month.',
+                    'now',
+                    'Step 7',
+                ],
+                [
+                    'Fire NOC, lift licence, insurance, AGM date',
+                    'High-rise compliance dates otherwise live in a register.',
+                    'now',
+                    'Step 7',
+                ],
+                [
+                    'Move-out, no-dues, tenancy file',
+                    'Sales and new tenants are constant. The gate will later ask for the same papers.',
+                    'now',
+                    'Step 4',
+                ],
+                [
+                    'Interior-work permission and deposit',
+                    'Flats are renovated often. The deposit must stay out of the maintenance ledger.',
+                    'now',
+                    'Step 4',
+                ],
+                [
+                    'Builder to elected committee',
+                    'New buildings start with the builder. Older ones run through a secretary.',
+                    'now',
+                    'Step 1',
+                ],
+                [
+                    'English, Hindi, Marathi',
+                    'The three languages of the resident base in this market.',
+                    'now',
+                    'Step 1, then every screen',
+                ],
+                [
+                    'SMS plus Share on WhatsApp',
+                    'Many residents will not live in the app. Automatic WhatsApp waits for approval.',
+                    'now',
+                    'Step 5; API messages after the pilot',
+                ],
+                [
+                    'April–March export',
+                    'The society’s chartered accountant works on the financial year.',
+                    'now',
+                    'Step 8',
+                ],
+                [
+                    'Defaulters kept inside the committee',
+                    'Lobby lists are common. Other residents should not receive them from the app.',
+                    'now',
+                    'Step 5',
+                ],
+                [
+                    'Clubhouse, gym, terrace booking',
+                    'Township apps offer it. It is society property, and it is not required to attach home services.',
+                    'later',
+                    'Unscheduled, after step 9',
+                ],
+                [
+                    'Water by meter reading',
+                    'Some buildings bill water per unit. The line already has empty quantity and rate fields.',
+                    'later',
+                    'Field reserved in step 2',
+                ],
+                [
+                    'Visitor approval, staff entry, face check',
+                    'Residents ask for it. It also pulls the product toward MyGate, so the BRD keeps it last and optional.',
+                    'later',
+                    'After services, flags off',
+                ],
+                [
+                    'RO, AC, pest, deep clean, tank cleaning',
+                    'Fixed-price jobs for a flat or for the society. Residents do not pick a nearby vendor from a directory.',
+                    'later',
+                    'After step 9, with no phonebook',
+                ],
+                [
+                    'Local vendor directory',
+                    'A phonebook of plumbers and electricians, and a list of vendors within 2 km.',
+                    'out',
+                    'Held out, REQ-4.3 and REQ-4.10',
+                ],
+                [
+                    'Group-buy camps',
+                    'Useful in one tower. The BRD has no campaign engine, and a discounted price interacts with Decision 13.',
+                    'wait',
+                    'A notice can announce a camp. The engine stays unscheduled',
+                ],
+                [
+                    'Redevelopment files',
+                    'A large Mumbai topic, and a different product. The vault can hold a notice or a PDF.',
+                    'out',
+                    'Leave out',
+                ],
+                [
+                    'Rent receipts for HRA',
+                    'That is between landlord and tenant. The maintenance receipt is the society’s document.',
+                    'out',
+                    'Leave out',
+                ],
+                [
+                    'Payment gateway, commission, NACH',
+                    'These bring MDR and a different legal position. Decision 13 keeps them out.',
+                    'out',
+                    'Leave out',
+                ],
+            ];
+
+            const later = [
+                {
+                    n: 'A',
+                    title: 'Pilot gate',
+                    text: 'One society uses the core beside the paper register. Move on when at least 80% of flats use the app, at least 85% of bills are paid inside the window, and no serious money error has been found. The first society’s software fee can be waived. No duration is fixed here.',
+                },
+                {
+                    n: 'B',
+                    title: 'Automatic WhatsApp',
+                    text: 'BRD phase 6, after template approval. Each resident answers “Allow bill reminders on WhatsApp?”. No still receives SMS. A failed WhatsApp send falls back to SMS. SOS is always sent. This can start when approval exists. It does not block the decision to build services.',
+                },
+                {
+                    n: 'C',
+                    title: 'Priced home services',
+                    text: 'Fixed prices for RO / UV service, AC jet service, pest control, and move-in deep cleaning. The resident books a service and a slot, pays the provider’s own UPI ID, and the receipt says it is not a society payment. There is no vendor directory, no vendor sign-up, no 2 km search, and no click-to-call phonebook.',
+                },
+                {
+                    n: 'D',
+                    title: 'Society services',
+                    text: 'Common-area cleaning checklists, maid profiles with a verification record, and plant-care plans. Underground and overhead tank cleaning, and common-area fogging, are society-paid. If the society wants the cost back, the admin adds a one-time levy with the charge kinds from step 2. These are named services. They are not an open list of local vendors.',
+                },
+                {
+                    n: 'E',
+                    title: 'Gate, without face check',
+                    text: 'BRD phase 10, and only after the society agrees in a poll. One Android phone per gate, visitor approval with a 2-minute timeout, guest codes, staff entry, a new-tenant check that uses the papers from step 4, a 90-day entry log, and offline codes. Guards get a login only when this flag is on.',
+                },
+                {
+                    n: 'F',
+                    title: 'Face check',
+                    text: 'BRD phase 11, after a privacy review. Adults who consent, a real-person check, match result in under 5 seconds, India-only templates, deletion within 7 days of withdrawal or move-out. A printed photo is refused. Manual check always remains.',
+                },
+            ];
+
+            const unscheduled = [
+                'Amenity booking for a clubhouse, gym, or terrace.',
+                'Group-buy progress bars and automatic discounts. A notice in step 7 can announce a camp meanwhile.',
+                'Cheque “in clearing” as a switch. This phase follows the BRD: a recorded cheque clears the bill, and a bounce reverses it.',
+                'Gujarati for pockets where the committee asks for it.',
+                'A name-and-flat directory. Phone numbers stay hidden. Build it only if a society turns it on.',
+                'Metered water billing, using the empty quantity and rate on a charge line.',
+            ];
+
+            const leaveOut = [
+                'A percentage commission on service jobs, and holding provider money.',
+                'Razorpay, CCAvenue, or any maintenance gateway.',
+                'NACH or card auto-debit.',
+                'GST returns, balance sheets, and tax filing.',
+                'A redevelopment or society-redevelopment workflow.',
+                'Staff payroll and attendance.',
+                'Aadhaar face matching, and face data for anyone under 18.',
+                'Boom barriers, turnstiles, and vehicle-number cameras.',
+                'A public defaulter board.',
+                'Rent receipts between landlord and tenant.',
+                'Police verification performed by FacilityCore.',
+                'Local vendors for now: the Local Help phonebook (REQ-4.3) and vendors within 2 km (REQ-4.10). No directory, no click-to-call, no vendor sign-up, no distance search, and no vendor listing fee.',
+            ];
+
+            const kindLabel = { brd: 'BRD', add: 'ADD', seam: 'SEAM' };
+
+            function esc(s) {
+                return String(s).replace(
+                    /[&<>"']/g,
+                    (c) =>
+                        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]
+                );
+            }
+
+            function renderFlow() {
+                document.getElementById('flow').innerHTML = steps
+                    .map(
+                        (s) =>
+                            `<button type="button" data-jump="${s.id}"><span class="n">${String(s.id).padStart(2, '0')}</span><strong>${esc(s.title)}</strong><small>${esc(s.brd)}</small></button>`
+                    )
+                    .join('');
+            }
+
+            function renderDecisions() {
+                document.getElementById('decisions').innerHTML =
+                    '<strong>Settings this plan starts with.</strong> One society is live, and every table has a society id. The treasurer confirms UPI by the reference number. The payment window defaults to 10 days. Late-fee type starts on Simple plus a cap, and Growing is tested with the BRD example. Android comes before iPhone. Late fees pause while a payment waits. Service money is not taken and not held. Gate and face check stay off. Local vendors are out of this plan end to end: no phonebook, no click-to-call, and no 2 km directory.';
+            }
+
+            function renderGantt() {
+                const head = `<thead><tr><th>Feature</th>${steps
+                    .map(
+                        (s) =>
+                            `<th class="step" data-step="${s.id}"><b>${String(s.id).padStart(2, '0')}</b><small>${esc(s.title)}</small></th>`
+                    )
+                    .join('')}</tr></thead>`;
+                let body = '';
+                steps.forEach((s) => {
+                    body += `<tr class="group" data-group="${s.id}"><th colspan="10">${String(s.id).padStart(2, '0')} · ${esc(s.title)}</th></tr>`;
+                    features
+                        .filter((f) => f.step === s.id)
+                        .forEach((f) => {
+                            const cells = steps
+                                .map((col) => {
+                                    if (col.id !== f.step) return `<td data-step="${col.id}"></td>`;
+                                    return `<td data-step="${col.id}"><span class="mark ${f.kind}" title="${esc(f.name)}"></span></td>`;
+                                })
+                                .join('');
+                            body += `<tr data-kind="${f.kind}" data-group="${s.id}"><th scope="row"><a href="#${f.id}"><span class="tag ${f.kind}">${kindLabel[f.kind]}</span>${esc(f.name)}</a></th>${cells}</tr>`;
+                        });
+                });
+                document.getElementById('gantt').innerHTML = head + `<tbody>${body}</tbody>`;
+            }
+
+            function renderSteps() {
+                document.getElementById('steps').innerHTML = steps
+                    .map((s) => {
+                        const items = features
+                            .filter((f) => f.step === s.id)
+                            .map(
+                                (f) => `
+      <li id="${f.id}">
+        <div class="feat-head">
+          <span class="tag ${f.kind}">${kindLabel[f.kind]}</span>
+          <h4>${esc(f.name)}</h4>
+          <span class="req">${esc(f.req)}</span>
+        </div>
+        <ul class="points">${f.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>
+      </li>`
+                            )
+                            .join('');
+                        return `<article class="step" id="step-${s.id}">
+      <p class="kicker">Step ${String(s.id).padStart(2, '0')} · ${esc(s.brd)}</p>
+      <h3>${esc(s.title)}</h3>
+      <p>${esc(s.purpose)}</p>
+      <p class="pass"><strong>Done when.</strong> ${esc(s.pass)}</p>
+      <ol class="clean">${items}</ol>
+    </article>`;
+                    })
+                    .join('');
+            }
+
+            function statusPill(status) {
+                const label = {
+                    now: 'In this phase',
+                    later: 'Later',
+                    wait: 'Unscheduled',
+                    out: 'Leave out',
+                }[status];
+                return `<span class="pill ${status}">${label}</span>`;
+            }
+
+            function renderCompare() {
+                document.getElementById('mmr-intro').textContent =
+                    'The same pattern runs across Mumbai, Navi Mumbai, Thane, and the rest of the region: cooperative or apartment societies, rental churn, monsoon seepage, festival collections, and water that sometimes arrives by tanker. This table places each of those needs on the chart, after step 9, or outside the product.';
+                document.getElementById('compare').innerHTML =
+                    `<thead><tr><th>Facility</th><th>Why it matters in MMR</th><th>Place</th><th>Where</th></tr></thead><tbody>${compare
+                        .map(
+                            (row) =>
+                                `<tr><td>${esc(row[0])}</td><td>${esc(row[1])}</td><td>${statusPill(row[2])}</td><td>${esc(row[3])}</td></tr>`
+                        )
+                        .join('')}</tbody>`;
+            }
+
+            function renderAdded() {
+                const rows = features.filter((f) => f.kind !== 'brd');
+                document.getElementById('added').innerHTML =
+                    `<thead><tr><th>Item</th><th>Step</th><th>Why it is on this chart</th></tr></thead><tbody>${rows
+                        .map((f) => {
+                            const why = f.points[0];
+                            return `<tr><td><span class="tag ${f.kind}">${kindLabel[f.kind]}</span> <a href="#${f.id}">${esc(f.name)}</a></td><td>${String(f.step).padStart(2, '0')}</td><td>${esc(why)}</td></tr>`;
+                        })
+                        .join('')}</tbody>`;
+            }
+
+            function renderLater() {
+                document.getElementById('later').innerHTML = later
+                    .map(
+                        (item) =>
+                            `<li><div class="num">${esc(item.n)}</div><div><h4>${esc(item.title)}</h4><p>${esc(item.text)}</p></div></li>`
+                    )
+                    .join('');
+                document.getElementById('side').innerHTML = `
+    <h3 style="font-size:18px">Unscheduled</h3>
+    <ul class="points">${unscheduled.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+    <h3 style="font-size:18px;margin-top:14px">Leave out</h3>
+    <ul class="points">${leaveOut.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>
+    <p style="margin-top:12px"><strong>Decision 13.</strong> This plan follows the BRD on money. When priced services are built later, the resident pays the provider directly. FacilityCore’s income in this phase is the per-flat fee. The vendor listing fee leaves with the local-vendor directory. The strategy note’s 10–25% commission and group-buy margin stay unscheduled until that decision is changed on purpose. A commission also needs a gateway and a legal and tax review.</p>`;
+            }
+
+            function setFilter(kind) {
+                document.querySelectorAll('.toolbar button[data-filter]').forEach((btn) => {
+                    btn.setAttribute(
+                        'aria-pressed',
+                        btn.dataset.filter === kind ? 'true' : 'false'
+                    );
+                });
+                const table = document.getElementById('gantt');
+                table.querySelectorAll('tbody tr[data-kind]').forEach((row) => {
+                    row.hidden = kind !== 'all' && row.dataset.kind !== kind;
+                });
+                table.querySelectorAll('tr.group').forEach((group) => {
+                    const id = group.dataset.group;
+                    const any = [
+                        ...table.querySelectorAll(`tr[data-kind][data-group="${id}"]`),
+                    ].some((row) => !row.hidden);
+                    group.hidden = !any;
+                });
+            }
+
+            function bind() {
+                document.querySelectorAll('.toolbar button[data-filter]').forEach((btn) => {
+                    btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+                });
+                document.getElementById('print').addEventListener('click', () => window.print());
+                window.addEventListener('beforeprint', () => setFilter('all'));
+                document.getElementById('flow').addEventListener('click', (event) => {
+                    const btn = event.target.closest('button[data-jump]');
+                    if (!btn) return;
+                    focusStep(btn.dataset.jump);
+                });
+                document.getElementById('gantt').addEventListener('click', (event) => {
+                    const th = event.target.closest('th.step');
+                    if (!th) return;
+                    focusStep(th.dataset.step);
+                });
+                document.getElementById('gantt').addEventListener('mouseover', (event) => {
+                    const row = event.target.closest('tr[data-kind]');
+                    document
+                        .querySelectorAll('#gantt tr.hot')
+                        .forEach((r) => r.classList.remove('hot'));
+                    if (row) row.classList.add('hot');
+                });
+            }
+
+            function focusStep(id) {
+                const table = document.getElementById('gantt');
+                table.dataset.focus = table.dataset.focus === String(id) ? '' : String(id);
+                const card = document.getElementById(`step-${id}`);
+                if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            function checkData() {
+                features.forEach((f) => {
+                    if (!steps.some((s) => s.id === f.step)) throw new Error(`Bad step on ${f.id}`);
+                    if (!kindLabel[f.kind]) throw new Error(`Bad kind on ${f.id}`);
+                });
+                const ids = new Set();
+                features.forEach((f) => {
+                    if (ids.has(f.id)) throw new Error(`Duplicate ${f.id}`);
+                    ids.add(f.id);
+                });
+            }
+
+            checkData();
+            document.getElementById('counts').textContent =
+                `${steps.length} steps · ${features.length} features · ${features.filter((f) => f.kind === 'add').length} MMR and safety additions`;
+            renderFlow();
+            renderDecisions();
+            renderGantt();
+            renderSteps();
+            renderCompare();
+            renderAdded();
+            renderLater();
+            bind();
+        </script>
+    </body>
+</html>
