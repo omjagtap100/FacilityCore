@@ -663,8 +663,8 @@
                     title: 'Foundation',
                     brd: 'BRD phase 1',
                     purpose:
-                        'A person can sign in, see only their role, and the society’s flats and old dues are in the system.',
-                    pass: 'The admin loads flats, people, and opening balances. Each person logs in, sees their own language, and cannot open another role’s data. The opening-balance total matches the paper register before it is saved.',
+                        'FacilityCore staff onboard a society and name who may run it. Those people sign in, see only their role, and the flats and old dues are in the system.',
+                    pass: 'A system admin creates the society and invites the secretary. The secretary then loads flats, people, and opening balances. Each person logs in, sees their own language, and cannot open another society or another role’s data. The opening-balance total matches the paper register before it is saved.',
                 },
                 {
                     id: 2,
@@ -733,6 +733,32 @@
 
             const features = [
                 {
+                    id: 'F36',
+                    step: 1,
+                    kind: 'add',
+                    name: 'Onboard a society',
+                    req: 'Multi-tenant control',
+                    points: [
+                        'FacilityCore staff use a system-admin web portal. The role is not a member of any society.',
+                        'They create a society with name, city, and address. It starts as Draft, then they mark it Active.',
+                        'Suspending a society stops sign-in for everyone in it.',
+                        'The portal lists every society. A resident or a secretary never sees that list.',
+                    ],
+                },
+                {
+                    id: 'F37',
+                    step: 1,
+                    kind: 'add',
+                    name: 'Committee access for a society',
+                    req: 'Multi-tenant control',
+                    points: [
+                        'On the society page, system admin adds a person by mobile number and role: Secretary, Treasurer, or Facility Manager.',
+                        'The first person required is the secretary. That person adds flats and residents on the society dashboard.',
+                        'System admin can replace or remove a committee role later. The old actions stay attributed to the person who did them.',
+                        'System admin does not confirm payments, send bills, or type in each resident. Day-to-day people stay with the secretary.',
+                    ],
+                },
+                {
                     id: 'F01',
                     step: 1,
                     kind: 'brd',
@@ -741,7 +767,7 @@
                     points: [
                         'Login is a mobile number and an SMS OTP. There is no password. The session stays until logout.',
                         'The first open asks for English, Hindi, or Marathi, remembers it, and Profile can change it.',
-                        'Roles are Resident, Treasurer, Builder/Admin, and Facility Manager. Each token can call only that role’s actions.',
+                        'Roles are System Admin, Resident, Treasurer, Builder/Admin, and Facility Manager. A system admin is FacilityCore staff and belongs to no society. Each token can call only that role’s actions.',
                         'Security guards do not have accounts in this phase.',
                     ],
                 },
@@ -1175,6 +1201,12 @@
 
             const compare = [
                 [
+                    'Onboard a client society',
+                    'A new society needs a record and a secretary before any resident can sign in.',
+                    'now',
+                    'Step 1, system-admin portal',
+                ],
+                [
                     'Maintenance billing and zero-fee UPI',
                     'Committees resist a 1.5–2% gateway cut on dues.',
                     'now',
@@ -1410,7 +1442,7 @@
 
             function renderDecisions() {
                 document.getElementById('decisions').innerHTML =
-                    '<strong>Settings this plan starts with.</strong> One society is live, and every table has a society id. The treasurer confirms UPI by the reference number. The payment window defaults to 10 days. Late-fee type starts on Simple plus a cap, and Growing is tested with the BRD example. Android comes before iPhone. Late fees pause while a payment waits. Service money is not taken and not held. Gate and face check stay off. Local vendors are out of this plan end to end: no phonebook, no click-to-call, and no 2 km directory.';
+                    '<strong>Settings this plan starts with.</strong> One app, many societies. FacilityCore staff onboard each society and grant the secretary, treasurer, and facility manager. Every table has a society id. The first release can still run a single society. The treasurer confirms UPI by the reference number. The payment window defaults to 10 days. Late-fee type starts on Simple plus a cap, and Growing is tested with the BRD example. Android comes before iPhone. Late fees pause while a payment waits. Service money is not taken and not held. Gate and face check stay off. Local vendors are out of this plan end to end: no phonebook, no click-to-call, and no 2 km directory.';
             }
 
             function renderGantt() {

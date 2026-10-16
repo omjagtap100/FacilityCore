@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FacilityCore — system admin wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    display: flex;
+    background: #e8e4dc;
+    color: #1c1b19;
+    font-family: Inter, sans-serif;
+  }
+  aside {
+    width: 240px;
+    flex: none;
+    background: #f7f6f3;
+    border-right: 1px solid #e4e0d8;
+    overflow: auto;
+    padding: 20px 12px 32px;
+  }
+  aside h1 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 16px 4px;
+  }
+  aside p {
+    font-size: 12px;
+    line-height: 1.45;
+    color: #6f6a63;
+    margin: 0 16px 16px;
+  }
+  button.screen {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #1c1b19;
+    font: inherit;
+    font-size: 13px;
+  }
+  button.screen.on { background: #1c1b19; color: #f7f6f3; }
+  .stage {
+    flex: 1;
+    min-width: 0;
+    padding: 16px;
+  }
+  .desk {
+    height: 100%;
+    background: #111;
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 6px;
+    background: #faf9f6;
+  }
+</style>
+</head>
+<body>
+<aside>
+  <h1>System admin</h1>
+  <p>Desktop console. The pages are the HTML as supplied. Societies, Register, and Palm Court open the matching page. Status, remove, and grant stay on the page.</p>
+  <div id="list"></div>
+</aside>
+<div class="stage">
+  <div class="desk">
+    <iframe id="frame" title="System admin page"></iframe>
+  </div>
+</div>
+<script src="screens.js"></script>
+<script>
+const screens = [
+  ['s01', 'S1 Dashboard'],
+  ['s02', 'S2 New society'],
+  ['s03', 'S3 Society access']
+];
+const frame = document.getElementById('frame');
+const list = document.getElementById('list');
+let current = 's01';
+let stack = [];
+
+screens.forEach(([id, name]) => {
+  const b = document.createElement('button');
+  b.className = 'screen';
+  b.dataset.id = id;
+  b.textContent = name;
+  b.addEventListener('click', () => show(id));
+  list.appendChild(b);
+});
+
+function show(id) {
+  if (id === current) return;
+  stack.push(current);
+  current = id;
+  paint();
+}
+function paint() {
+  const old = frame.contentDocument;
+  if (old) old.documentElement.dataset.stale = '1';
+  frame.srcdoc = SCREEN_HTML[current];
+  let spins = 0;
+  (function arm() {
+    const doc = frame.contentDocument;
+    if (doc && doc.body && doc.documentElement.dataset.stale !== '1') wire();
+    else if (spins++ < 180) requestAnimationFrame(arm);
+  })();
+  document.querySelectorAll('button.screen').forEach(b => {
+    b.classList.toggle('on', b.dataset.id === current);
+  });
+}
+function label(el) {
+  return (el.innerText || '').replace(/\s+/g, ' ').trim();
+}
+function destination(el) {
+  const path = el.getAttribute('data-path');
+  if (path === 'dashboard') return 's01';
+  if (path === 'new-society') return 's02';
+  const t = label(el);
+  if (current === 's01' && el.tagName === 'BUTTON' && t.indexOf('New society') !== -1) return 's02';
+  if (current === 's01') {
+    const row = el.closest('tr');
+    if (row && label(row).indexOf('Palm Court CHS') !== -1) return 's03';
+  }
+  return null;
+}
+function wire() {
+  const doc = frame.contentDocument;
+  if (!doc || doc.documentElement.dataset.wired) return;
+  doc.documentElement.dataset.wired = '1';
+  doc.addEventListener('click', (e) => {
+    const el = e.target.closest('a, button, tr');
+    if (!el) return;
+    const href = el.getAttribute('href') || '';
+    if (el.tagName === 'A' && href.charAt(0) === '#' && href.length > 1) return;
+    const to = destination(el);
+    if (!to) return;
+    e.preventDefault();
+    e.stopPropagation();
+    show(to);
+  }, true);
+  doc.addEventListener('submit', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (current === 's02') show('s01');
+  }, true);
+}
+frame.addEventListener('load', wire);
+paint();
+</script>
+</body>
+</html>

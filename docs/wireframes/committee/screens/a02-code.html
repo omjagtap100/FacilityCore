@@ -1,0 +1,133 @@
+<!-- A2 — Code (Committee Mobile) -->
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary": "#ffffff", "surface-dim": "#dbdad7", "on-tertiary-container": "#499268", "on-tertiary-fixed-variant": "#005230", "on-background": "#1b1c1a", "tertiary": "#000000", "outline-variant": "#cbc6bd", "on-secondary-container": "#67625b", "surface-tint": "#605e5b", "surface-bright": "#faf9f6", "on-tertiary-fixed": "#002110", "on-tertiary": "#ffffff", "error": "#ba1a1a", "tertiary-fixed-dim": "#8cd6a8", "on-error": "#ffffff", "on-secondary": "#ffffff", "on-primary-container": "#868380", "inverse-surface": "#2f312f", "surface": "#faf9f6", "on-secondary-fixed": "#1e1b16", "primary": "#000000", "surface-container-lowest": "#ffffff", "secondary-container": "#e6ded6", "surface-container-high": "#e9e8e5", "secondary": "#625e57", "tertiary-container": "#002110", "secondary-fixed-dim": "#ccc5bd", "surface-container": "#efeeeb", "primary-container": "#1c1b19", "on-secondary-fixed-variant": "#4a4640", "on-primary-fixed-variant": "#484644", "error-container": "#ffdad6", "surface-container-highest": "#e3e2df", "background": "#faf9f6", "primary-fixed": "#e6e2de", "on-primary-fixed": "#1c1b19", "outline": "#7a776f", "surface-variant": "#e3e2df", "on-surface-variant": "#494740", "inverse-on-surface": "#f2f1ee", "primary-fixed-dim": "#cac6c2", "on-error-container": "#93000a", "secondary-fixed": "#e9e1d9", "surface-container-low": "#f4f3f0", "on-surface": "#1b1c1a", "tertiary-fixed": "#a7f3c3", "inverse-primary": "#cac6c2" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-md": "1rem", "space-sm": "0.5rem", "space-xl": "2.5rem", "space-lg": "1.5rem", "margin": "1.5rem", "space-xs": "0.25rem", "gutter": "1rem" }, "fontFamily": { "amount-display": ["Inter"], "body-md": ["Inter"], "headline-sm": ["Inter"], "body-lg": ["Inter"], "title-md": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "label-caps": ["Inter"], "label-nav": ["Inter"] }, "fontSize": { "amount-display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "label-nav": ["11px", { "lineHeight": "14px", "fontWeight": "500" }] } } } };</script><style>@layer base{html,body{margin:0;padding:0;min-height:100%;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen"><div class="w-full max-w-[440px] mx-auto min-h-screen flex flex-col bg-surface"><div class="w-full h-6 pt-safe flex items-center justify-between px-margin text-on-surface select-none"><span class="font-label-caps text-label-caps text-on-surface">09:41</span><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[14px]">network_wifi</span><span class="material-symbols-outlined text-[14px]">signal_cellular_alt</span><span class="material-symbols-outlined text-[14px]">battery_full</span></div></div><main class="flex-1 flex flex-col relative w-full bg-surface pb-safe"><div class="flex flex-col w-full px-margin pb-margin">
+<div class="flex items-center justify-between py-space-sm mb-space-lg">
+<button aria-label="Go back" class="p-space-xs -ml-space-xs text-on-surface flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[24px]">arrow_back</span>
+</button>
+<span class="font-label-caps text-label-caps text-secondary uppercase tracking-wider">Verification 1 of 2</span>
+</div>
+<div class="flex flex-col mb-space-xl">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-xs">
+      Enter the code
+    </h1>
+<p class="font-body-md text-body-md text-secondary">
+      Sent to +91 98200 22001
+    </p>
+</div>
+<div class="w-full mb-space-xl">
+<div class="flex justify-between items-center gap-space-xs w-full" id="otp-container">
+<input aria-label="Digit 1" class="otp-digit w-[48px] h-[54px] text-center font-amount-display text-[24px] leading-none text-on-surface bg-surface border border-outline-variant rounded-lg focus:border-primary focus:outline-none transition-colors caret-primary" data-index="0" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input aria-label="Digit 2" class="otp-digit w-[48px] h-[54px] text-center font-amount-display text-[24px] leading-none text-on-surface bg-surface border border-outline-variant rounded-lg focus:border-primary focus:outline-none transition-colors caret-primary" data-index="1" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input aria-label="Digit 3" class="otp-digit w-[48px] h-[54px] text-center font-amount-display text-[24px] leading-none text-on-surface bg-surface border border-outline-variant rounded-lg focus:border-primary focus:outline-none transition-colors caret-primary" data-index="2" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input aria-label="Digit 4" class="otp-digit w-[48px] h-[54px] text-center font-amount-display text-[24px] leading-none text-on-surface bg-surface border border-outline-variant rounded-lg focus:border-primary focus:outline-none transition-colors caret-primary" data-index="3" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input aria-label="Digit 5" class="otp-digit w-[48px] h-[54px] text-center font-amount-display text-[24px] leading-none text-on-surface bg-surface border border-outline-variant rounded-lg focus:border-primary focus:outline-none transition-colors caret-primary" data-index="4" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+<input aria-label="Digit 6" class="otp-digit w-[48px] h-[54px] text-center font-amount-display text-[24px] leading-none text-on-surface bg-surface border border-outline-variant rounded-lg focus:border-primary focus:outline-none transition-colors caret-primary" data-index="5" inputmode="numeric" maxlength="1" pattern="[0-9]*" type="text"/>
+</div>
+</div>
+<div class="flex flex-col items-center justify-center w-full mb-space-xl">
+<div class="flex items-center gap-space-xs text-secondary mb-space-xs">
+<span class="font-body-sm text-body-sm">Didn't receive SMS?</span>
+<button class="font-body-sm text-body-sm font-semibold text-primary underline underline-offset-4 hover:opacity-80 transition-opacity" id="resend-btn" type="button">
+        Resend code
+      </button>
+</div>
+<span class="font-label-caps text-label-caps text-secondary" id="timer-text">
+      Wait 00:42 before requesting new OTP
+    </span>
+</div>
+<div class="w-full mt-auto pt-space-md">
+<button class="w-full h-[48px] rounded-lg font-title-md text-title-md flex items-center justify-center transition-all duration-150 bg-surface-container-high text-secondary cursor-not-allowed select-none" disabled="" id="submit-btn">
+      Continue
+    </button>
+<div class="mt-space-md text-center">
+<a class="font-body-sm text-body-sm text-secondary hover:text-on-surface underline transition-colors" href="javascript:void(0)">
+        Incorrect mobile number? Edit
+      </a>
+</div>
+</div>
+</div>
+<script>
+  (function() {
+    const inputs = Array.from(document.querySelectorAll('.otp-digit'));
+    const submitBtn = document.getElementById('submit-btn');
+    const resendBtn = document.getElementById('resend-btn');
+    const timerText = document.getElementById('timer-text');
+
+    if (!inputs.length || !submitBtn) return;
+
+    inputs[0].focus();
+
+    function checkCompletion() {
+      const code = inputs.map(input => input.value.trim()).join('');
+      const isComplete = code.length === 6 && /^\d{6}$/.test(code);
+
+      if (isComplete) {
+        submitBtn.removeAttribute('disabled');
+        submitBtn.className = "w-full h-[48px] rounded-lg font-title-md text-title-md flex items-center justify-center transition-all duration-150 bg-primary-container text-on-primary cursor-pointer active:opacity-85 select-none";
+      } else {
+        submitBtn.setAttribute('disabled', 'true');
+        submitBtn.className = "w-full h-[48px] rounded-lg font-title-md text-title-md flex items-center justify-center transition-all duration-150 bg-surface-container-high text-secondary cursor-not-allowed select-none";
+      }
+    }
+
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        const val = e.target.value.replace(/[^0-9]/g, '');
+        e.target.value = val ? val[val.length - 1] : '';
+
+        if (e.target.value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+        checkCompletion();
+      });
+
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+
+      input.addEventListener('paste', (e) => {
+        e.preventDefault();
+        const pasteData = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '');
+        if (!pasteData) return;
+        
+        pasteData.split('').slice(0, 6).forEach((char, i) => {
+          if (inputs[i]) inputs[i].value = char;
+        });
+
+        const nextFocus = Math.min(pasteData.length, inputs.length - 1);
+        inputs[nextFocus].focus();
+        checkCompletion();
+      });
+    });
+
+    let countdown = 42;
+    const timerInterval = setInterval(() => {
+      countdown--;
+      if (countdown <= 0) {
+        clearInterval(timerInterval);
+        timerText.textContent = "You can now request a new code.";
+      } else {
+        const formatted = countdown < 10 ? '0' + countdown : countdown;
+        timerText.textContent = `Wait 00:${formatted} before requesting new OTP`;
+      }
+    }, 1000);
+
+    resendBtn.addEventListener('click', () => {
+      if (countdown > 0) return;
+      countdown = 45;
+      inputs.forEach(i => i.value = '');
+      inputs[0].focus();
+      checkCompletion();
+    });
+  })();
+</script></main></div></body></html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FacilityCore — resident wireframe</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    display: flex;
+    background: #e8e4dc;
+    color: #1c1b19;
+    font-family: Inter, sans-serif;
+  }
+  aside {
+    width: 280px;
+    flex: none;
+    background: #f7f6f3;
+    border-right: 1px solid #e4e0d8;
+    overflow: auto;
+    padding: 20px 12px 32px;
+  }
+  aside h1 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 16px 4px;
+  }
+  aside p {
+    font-size: 12px;
+    line-height: 1.45;
+    color: #6f6a63;
+    margin: 0 16px 16px;
+  }
+  button.screen {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: transparent;
+    border: 0;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    color: #1c1b19;
+    font: inherit;
+    font-size: 13px;
+  }
+  button.screen small {
+    display: block;
+    color: #6f6a63;
+    font-size: 11px;
+    margin-top: 1px;
+  }
+  button.screen.on { background: #1c1b19; color: #f7f6f3; }
+  button.screen.on small { color: #c8c2b8; }
+  .stage {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+  }
+  .phone {
+    width: 390px;
+    height: 844px;
+    background: #111;
+    border-radius: 32px;
+    padding: 10px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+    transform-origin: center center;
+  }
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    border-radius: 24px;
+    background: #faf9f6;
+  }
+</style>
+</head>
+<body>
+<aside>
+  <h1>Resident</h1>
+  <p>The screens are the HTML as supplied. A click follows the flow. Language, the code, a poll, and an alert still run inside the screen.</p>
+  <div id="list"></div>
+</aside>
+<div class="stage" id="stage">
+  <div class="phone" id="phone">
+    <iframe id="frame" title="Resident screen"></iframe>
+  </div>
+</div>
+<script src="screens.js"></script>
+<script>
+const screens = [
+  ['r01', 'screens/r01-language.html', 'R1', 'Choose language'],
+  ['r02', 'screens/r02-mobile.html', 'R2', 'Mobile number'],
+  ['r03', 'screens/r03-otp.html', 'R3', 'Code'],
+  ['r04', 'screens/r04-data-notice.html', 'R4', 'Data notice'],
+  ['r05', 'screens/r05-home-due.html', 'R5', 'Home, amount due'],
+  ['r06', 'screens/r06-home-waiting.html', 'R6', 'Home, waiting'],
+  ['r07', 'screens/r07-home-clear.html', 'R7', 'Home, nothing due'],
+  ['r08', 'screens/r08-bill.html', 'R8', 'Bill breakup'],
+  ['r09', 'screens/r09-upi.html', 'R9', 'UPI reference'],
+  ['r10', 'screens/r10-statement.html', 'R10', 'Statement'],
+  ['r11', 'screens/r11-receipt.html', 'R11', 'Receipt'],
+  ['r12', 'screens/r12-complaints.html', 'R12', 'Complaints'],
+  ['r13', 'screens/r13-new-complaint.html', 'R13', 'New complaint'],
+  ['r14', 'screens/r14-complaint-detail.html', 'R14', 'Complaint detail'],
+  ['r15', 'screens/r15-notices.html', 'R15', 'Notices'],
+  ['r16', 'screens/r16-polls.html', 'R16', 'Poll'],
+  ['r17', 'screens/r17-profile.html', 'R17', 'Profile'],
+  ['r18', 'screens/r18-emergency.html', 'R18', 'Emergency']
+];
+const byId = Object.fromEntries(screens.map(s => [s[0], s]));
+const frame = document.getElementById('frame');
+const list = document.getElementById('list');
+let current = 'r01';
+let stack = [];
+
+screens.forEach(([id, , code, name]) => {
+  const b = document.createElement('button');
+  b.className = 'screen';
+  b.dataset.id = id;
+  b.innerHTML = code + ' ' + name;
+  b.addEventListener('click', () => show(id));
+  list.appendChild(b);
+});
+
+function show(id) {
+  if (id === current) return;
+  stack.push(current);
+  current = id;
+  paint();
+}
+function back() {
+  if (!stack.length) return;
+  current = stack.pop();
+  paint();
+}
+function paint() {
+  const old = frame.contentDocument;
+  if (old) old.documentElement.dataset.stale = '1';
+  frame.srcdoc = SCREEN_HTML[current];
+  let spins = 0;
+  (function arm() {
+    const doc = frame.contentDocument;
+    if (doc && doc.body && doc.documentElement.dataset.stale !== '1') wire();
+    else if (spins++ < 180) requestAnimationFrame(arm);
+  })();
+  document.querySelectorAll('button.screen').forEach(b => {
+    b.classList.toggle('on', b.dataset.id === current);
+  });
+  const on = document.querySelector('button.screen.on');
+  if (on) on.scrollIntoView({ block: 'nearest' });
+}
+function label(el) {
+  return (el.innerText || '').replace(/\s+/g, ' ').trim();
+}
+function navTarget(path) {
+  if (path === 'home') return 'r05';
+  if (path === 'bills' || path === 'receipt') return 'r10';
+  if (path === 'helpdesk' || path === 'help') return 'r12';
+  if (path === 'notices') return 'r15';
+  if (path === 'emergency') return 'r18';
+  if (path === 'profile') return 'r17';
+  return null;
+}
+function shouldLeaveAlone(el) {
+  if (el.closest('#flat-switcher-overlay, #open-switcher-trigger, #lang-options, #notice-accordion')) return true;
+  if (el.closest('#opt-yes, #opt-no, #submit-vote-btn, #emergency-btn, #resend-btn, #shareBtn, #downloadBtn')) return true;
+  if (el.id === 'lang-trigger' || el.classList.contains('lang-option') && current === 'r17') return true;
+  if (el.closest('[onclick*="selectEmergency"]')) return true;
+  const t = label(el);
+  if (t === 'Not fixed' || t === 'Resend code' || t === 'Add a screenshot' || t === 'Add one photo') return true;
+  return false;
+}
+function destination(el) {
+  const path = el.getAttribute('data-path');
+  if (path) return navTarget(path);
+  const named = el.getAttribute('aria-label') || '';
+  if (named === 'Go back' || named === 'Back') return 'back';
+  const t = label(el);
+  if (current === 'r01' && el.classList.contains('lang-option')) return 'r02';
+  if (current === 'r02' && el.id === 'submit-btn') return el.disabled ? null : 'r03';
+  if (current === 'r03' && el.id === 'submit-btn') return 'r04';
+  if (current === 'r03' && t === 'Edit mobile number') return 'r02';
+  if (current === 'r04' && el.id === 'continue-btn') return 'r05';
+  if (t === 'Pay now' || t.indexOf('Pay ₹') === 0 || t.indexOf('Redirecting') === 0) return 'r09';
+  if (t === 'View breakup') return 'r08';
+  if (t === 'Profile') return 'r17';
+  if (t === 'Emergency' || t === 'Emergency Society Assistance') return 'r18';
+  if (t === 'Edit reference') return 'r09';
+  if (t === 'Receipt') return 'r11';
+  if (t === 'Statement archive') return 'r10';
+  if (t === 'Report a problem') return 'r13';
+  if (t === 'Send' && current === 'r13') return 'r14';
+  if (t === 'Cancel and return to bills') return 'r08';
+  if (t === 'Cancel') return 'back';
+  if (t === 'What we keep') return 'r04';
+  if (t === 'Log out') return 'r01';
+  if (t === 'View Society Meeting Notice') return 'r15';
+  if (current === 'r12' && el.closest('.py-4') && !el.closest('button')) return 'r14';
+  const notice = el.closest('.bg-surface-container-low, .py-space-md');
+  if ((current === 'r05' || current === 'r06' || current === 'r07') && notice && label(notice).indexOf('Water shutdown') === 0) return 'r15';
+  return null;
+}
+function wire() {
+  const doc = frame.contentDocument;
+  if (!doc || doc.documentElement.dataset.wired) return;
+  doc.documentElement.dataset.wired = '1';
+  doc.addEventListener('click', (e) => {
+    const el = e.target.closest('a, button, .lang-option, [data-path], .py-4, .bg-surface-container-low, .py-space-md');
+    if (!el || shouldLeaveAlone(el)) return;
+    if (el.tagName === 'A' && /^https?:/.test(el.getAttribute('href') || '')) return;
+    const to = destination(el);
+    if (!to) return;
+    e.preventDefault();
+    e.stopPropagation();
+    if (to === 'back') back();
+    else show(to);
+  }, true);
+  doc.addEventListener('submit', (e) => {
+    if (current === 'r02') {
+      const input = doc.getElementById('mobile-input');
+      if (input && input.value.replace(/\D/g, '').length === 10) {
+        e.preventDefault();
+        e.stopPropagation();
+        show('r03');
+      }
+    }
+    if (current === 'r09') {
+      const input = doc.getElementById('upi-ref-input');
+      if (input && input.value.replace(/\D/g, '').length === 12) {
+        e.preventDefault();
+        e.stopPropagation();
+        show('r06');
+      }
+    }
+  }, true);
+}
+frame.addEventListener('load', wire);
+
+function fit() {
+  const availH = document.getElementById('stage').clientHeight - 32;
+  const availW = document.getElementById('stage').clientWidth - 32;
+  const scale = Math.min(1, availH / 844, availW / 390);
+  document.getElementById('phone').style.transform = 'scale(' + scale + ')';
+}
+window.addEventListener('resize', fit);
+paint();
+fit();
+</script>
+</body>
+</html>
