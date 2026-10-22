@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#cac6c2", "on-tertiary": "#ffffff", "surface-container": "#efeeeb", "error-container": "#ffdad6", "surface-container-high": "#e9e8e5", "surface-container-lowest": "#ffffff", "secondary": "#625e57", "on-secondary-fixed-variant": "#4a4640", "inverse-surface": "#2f312f", "outline": "#7a776f", "on-tertiary-fixed": "#002110", "surface": "#faf9f6", "tertiary-fixed": "#a7f3c3", "inverse-primary": "#cac6c2", "on-secondary": "#ffffff", "inverse-on-surface": "#f2f1ee", "on-error-container": "#93000a", "surface-bright": "#faf9f6", "primary": "#000000", "on-tertiary-fixed-variant": "#005230", "surface-container-highest": "#e3e2df", "secondary-fixed-dim": "#ccc5bd", "error": "#ba1a1a", "outline-variant": "#cbc6bd", "tertiary-fixed-dim": "#8cd6a8", "on-tertiary-container": "#499268", "tertiary-container": "#002110", "background": "#faf9f6", "on-primary-fixed": "#1c1b19", "tertiary": "#000000", "on-secondary-container": "#67625b", "primary-container": "#1c1b19", "on-secondary-fixed": "#1e1b16", "on-primary": "#ffffff", "secondary-fixed": "#e9e1d9", "surface-container-low": "#f4f3f0", "on-background": "#1b1c1a", "primary-fixed": "#e6e2de", "surface-variant": "#e3e2df", "secondary-container": "#e6ded6", "on-error": "#ffffff", "on-surface-variant": "#494740", "on-primary-fixed-variant": "#484644", "surface-tint": "#605e5b", "on-primary-container": "#868380", "surface-dim": "#dbdad7", "on-surface": "#1b1c1a" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem", "gutter": "1rem", "margin": "1.5rem", "space-xl": "2.5rem" }, "fontFamily": { "headline-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "label-caps": ["Inter"], "amount-display": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "title-md": ["Inter"], "label-nav": ["Inter"] }, "fontSize": { "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "amount-display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "label-nav": ["11px", { "lineHeight": "14px", "fontWeight": "500" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf9f6;color:#1b1c1a;font-family:'Inter',sans-serif;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-6 px-margin flex items-center justify-between text-on-surface"><span class="font-label-caps text-label-caps tracking-normal font-semibold">09:41</span><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span><span class="material-symbols-outlined text-[16px]">wifi</span><span class="material-symbols-outlined text-[16px]">battery_full</span></div></div><div class="h-14 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="min-w-[44px] min-h-[44px] flex items-center justify-center -ml-space-sm text-on-surface hover:text-on-surface-variant transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><h1 class="font-title-md text-title-md text-on-surface tracking-tight">Bill Detail</h1></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex flex-col relative w-full px-margin pt-20 pb-margin bg-surface"><div class="flex flex-col w-full">
+<div class="flex items-start gap-space-sm bg-error-container/40 p-space-md rounded-lg mb-space-lg" id="rejection-banner">
+<span class="material-symbols-outlined text-[18px] text-error shrink-0 mt-0.5">error</span>
+<div class="flex flex-col">
+<p class="font-body-sm text-body-sm font-semibold text-error">We could not match this reference.</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Please confirm the 12-digit transaction ID on your payment app receipt.</p>
+</div>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-lg text-headline-lg text-on-primary-fixed tracking-tight">I have paid.</h2>
+<p class="font-title-md text-title-md text-on-primary-fixed mt-space-xs font-semibold">₹4,850 to Palm Court CHS.</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-xs mb-space-lg">UPI ID palmcourt@okbank · note B-1204</p>
+</div>
+<div class="w-full h-px bg-outline-variant mb-space-lg"></div>
+<form class="flex flex-col w-full" id="upi-form" onsubmit="event.preventDefault(); handleSubmit();">
+<div class="flex flex-col mb-space-lg">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider mb-space-xs" for="upi-ref-input">
+        UPI REFERENCE
+      </label>
+<div class="relative flex items-center">
+<input class="w-full h-12 bg-transparent border border-outline-variant rounded-lg px-space-md font-mono text-body-lg text-on-surface placeholder:text-outline focus:outline-none focus:border-on-surface transition-colors" id="upi-ref-input" inputmode="numeric" maxlength="12" oninput="handleInput(this)" pattern="[0-9]*" placeholder="e.g. 408219827361" type="text"/>
+<div class="absolute right-3 font-label-caps text-label-caps text-on-surface-variant font-mono select-none" id="char-counter">
+          0/12
+        </div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1.5">
+        Also known as UTR or Bank Reference No. in GPay, PhonePe, or Paytm.
+      </p>
+</div>
+<div class="flex flex-col mb-space-xl">
+<div class="flex items-center justify-between mb-space-xs">
+<label class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">
+          PAYMENT PROOF
+        </label>
+<span class="font-label-caps text-label-caps text-on-surface-variant">OPTIONAL</span>
+</div>
+<div class="group relative flex flex-col items-center justify-center w-full h-24 border border-dashed border-outline-variant rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors" id="upload-dropzone" onclick="triggerFileInput()">
+<input accept="image/*" class="hidden" id="file-input" onchange="handleFileSelect(this)" type="file"/>
+<div class="flex flex-col items-center justify-center text-center px-space-md" id="upload-empty-state">
+<span class="font-body-md text-body-md text-on-surface font-medium underline underline-offset-4 group-hover:text-primary transition-colors">
+            Add a screenshot
+          </span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            PNG or JPG up to 5MB
+          </span>
+</div>
+<div class="hidden flex items-center justify-between w-full px-space-md" id="upload-selected-state">
+<div class="flex items-center gap-space-sm min-w-0">
+<span class="material-symbols-outlined text-[20px] text-on-surface">receipt_long</span>
+<span class="font-body-md text-body-md text-on-surface truncate" id="file-name">receipt.png</span>
+</div>
+<button class="min-w-[32px] min-h-[32px] flex items-center justify-center text-on-surface-variant hover:text-on-surface" onclick="removeFile(event)" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+</div>
+<button class="w-full h-12 bg-primary-container text-on-primary font-title-md text-title-md rounded-lg active:opacity-85 transition-opacity flex items-center justify-center select-none" id="submit-btn" type="submit">
+      Submit
+    </button>
+</form>
+<div class="flex flex-col items-center mt-space-lg">
+<button class="font-body-md text-body-md text-on-surface font-medium hover:underline py-space-xs" onclick="history.back()" type="button">
+      Cancel and return to bills
+    </button>
+</div>
+<div class="mt-space-xl pt-space-md border-t border-outline-variant flex flex-col gap-1">
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-label-caps">
+<span>RECORDED AT</span>
+<span class="font-mono">14 APR 2025 · 09:41 IST</span>
+</div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-caps text-label-caps">
+<span>FLAT ALLOCATION</span>
+<span>WING B · UNIT 1204</span>
+</div>
+</div>
+</div>
+<script>
+  function handleInput(input) {
+    input.value = input.value.replace(/[^0-9]/g, '');
+    const len = input.value.length;
+    const counter = document.getElementById('char-counter');
+    if (counter) {
+      counter.textContent = len + '/12';
+      if (len === 12) {
+        counter.classList.add('text-primary');
+        counter.classList.remove('text-on-surface-variant');
+      } else {
+        counter.classList.remove('text-primary');
+        counter.classList.add('text-on-surface-variant');
+      }
+    }
+  }
+
+  function triggerFileInput() {
+    const fileInput = document.getElementById('file-input');
+    if (fileInput) fileInput.click();
+  }
+
+  function handleFileSelect(input) {
+    if (input.files && input.files[0]) {
+      const emptyState = document.getElementById('upload-empty-state');
+      const selectedState = document.getElementById('upload-selected-state');
+      const fileName = document.getElementById('file-name');
+      
+      fileName.textContent = input.files[0].name;
+      emptyState.classList.add('hidden');
+      selectedState.classList.remove('hidden');
+    }
+  }
+
+  function removeFile(event) {
+    event.stopPropagation();
+    const fileInput = document.getElementById('file-input');
+    const emptyState = document.getElementById('upload-empty-state');
+    const selectedState = document.getElementById('upload-selected-state');
+    
+    fileInput.value = '';
+    selectedState.classList.add('hidden');
+    emptyState.classList.remove('hidden');
+  }
+
+  function handleSubmit() {
+    const input = document.getElementById('upi-ref-input');
+    const banner = document.getElementById('rejection-banner');
+    if (input.value.length !== 12) {
+      banner.classList.remove('hidden');
+      input.classList.add('border-error');
+      input.focus();
+    } else {
+      banner.classList.add('hidden');
+      input.classList.remove('border-error');
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.textContent = 'Submitted to Treasurer';
+      submitBtn.disabled = true;
+      submitBtn.classList.add('opacity-75');
+    }
+  }
+</script></main></body></html>

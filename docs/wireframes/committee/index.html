@@ -1,218 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>FacilityCore — committee wireframe</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-<style>
-  * { box-sizing: border-box; }
-  html, body { margin: 0; height: 100%; }
-  body {
-    display: flex;
-    background: #e8e4dc;
-    color: #1c1b19;
-    font-family: Inter, sans-serif;
-  }
-  aside {
-    width: 280px;
-    flex: none;
-    background: #f7f6f3;
-    border-right: 1px solid #e4e0d8;
-    overflow: auto;
-    padding: 20px 12px 32px;
-  }
-  aside h1 {
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 16px 4px;
-  }
-  aside p {
-    font-size: 12px;
-    line-height: 1.45;
-    color: #6f6a63;
-    margin: 0 16px 16px;
-  }
-  button.screen {
-    display: block;
-    width: 100%;
-    text-align: left;
-    background: transparent;
-    border: 0;
-    border-radius: 8px;
-    padding: 8px 12px;
-    cursor: pointer;
-    color: #1c1b19;
-    font: inherit;
-    font-size: 13px;
-  }
-  button.screen.on { background: #1c1b19; color: #f7f6f3; }
-  .stage {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 0;
-  }
-  .phone {
-    width: 390px;
-    height: 844px;
-    background: #111;
-    border-radius: 32px;
-    padding: 10px;
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
-    transform-origin: center center;
-  }
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: 0;
-    border-radius: 24px;
-    background: #faf9f6;
-  }
-</style>
-</head>
-<body>
-<aside>
-  <h1>Committee</h1>
-  <p>The screens are the HTML as supplied. Sign-in, a flat, import, and the overview rows move between screens. Confirm, save, waive, and publish stay on the page.</p>
-  <div id="list"></div>
-</aside>
-<div class="stage" id="stage">
-  <div class="phone" id="phone">
-    <iframe id="frame" title="Committee screen"></iframe>
-  </div>
-</div>
-<script src="screens.js"></script>
-<script>
-const screens = [
-  ['a01', 'screens/a01-sign-in.html', 'A1 Sign in'],
-  ['a02', 'screens/a02-code.html', 'A2 Code'],
-  ['a03', 'screens/a03-overview.html', 'A3 Overview'],
-  ['a04', 'screens/a04-flats.html', 'A4 Flats'],
-  ['a05', 'screens/a05-flat.html', 'A5 Flat'],
-  ['a06', 'screens/a06-import.html', 'A6 Import'],
-  ['a07', 'screens/a07-charges.html', 'A7 Charges'],
-  ['a08', 'screens/a08-review-bills.html', 'A8 Review bills'],
-  ['a09', 'screens/a09-confirm.html', 'A9 Confirm payments'],
-  ['a10', 'screens/a10-record-payment.html', 'A10 Record a payment'],
-  ['a11', 'screens/a11-late-fees.html', 'A11 Late fees'],
-  ['a12', 'screens/a12-complaints.html', 'A12 Complaints'],
-  ['a13', 'screens/a13-polls.html', 'A13 Polls'],
-  ['a14', 'screens/a14-notices.html', 'A14 Notices'],
-  ['a15', 'screens/a15-documents.html', 'A15 Documents'],
-  ['a16', 'screens/a16-reports.html', 'A16 Reports'],
-  ['a17', 'screens/a17-history.html', 'A17 History'],
-  ['a18', 'screens/a18-settings.html', 'A18 Settings']
-];
-const byId = Object.fromEntries(screens.map(s => [s[0], s]));
-const frame = document.getElementById('frame');
-const list = document.getElementById('list');
-let current = 'a01';
-let stack = [];
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>FacilityCore — committee wireframe</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            html,
+            body {
+                margin: 0;
+                height: 100%;
+            }
+            body {
+                display: flex;
+                background: #e8e4dc;
+                color: #1c1b19;
+                font-family: Inter, sans-serif;
+            }
+            aside {
+                width: 280px;
+                flex: none;
+                background: #f7f6f3;
+                border-right: 1px solid #e4e0d8;
+                overflow: auto;
+                padding: 20px 12px 32px;
+            }
+            aside h1 {
+                font-size: 15px;
+                font-weight: 600;
+                margin: 0 16px 4px;
+            }
+            aside p {
+                font-size: 12px;
+                line-height: 1.45;
+                color: #6f6a63;
+                margin: 0 16px 16px;
+            }
+            button.screen {
+                display: block;
+                width: 100%;
+                text-align: left;
+                background: transparent;
+                border: 0;
+                border-radius: 8px;
+                padding: 8px 12px;
+                cursor: pointer;
+                color: #1c1b19;
+                font: inherit;
+                font-size: 13px;
+            }
+            button.screen.on {
+                background: #1c1b19;
+                color: #f7f6f3;
+            }
+            .stage {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-width: 0;
+            }
+            .phone {
+                width: 390px;
+                height: 844px;
+                background: #111;
+                border-radius: 32px;
+                padding: 10px;
+                box-shadow: 0 18px 50px rgba(0, 0, 0, 0.18);
+                transform-origin: center center;
+            }
+            iframe {
+                width: 100%;
+                height: 100%;
+                border: 0;
+                border-radius: 24px;
+                background: #faf9f6;
+            }
+        </style>
+    </head>
+    <body>
+        <aside>
+            <h1>Committee</h1>
+            <p>
+                The screens are the HTML as supplied. Sign-in, a flat, import, and the overview rows
+                move between screens. Confirm, save, waive, and publish stay on the page.
+            </p>
+            <div id="list"></div>
+        </aside>
+        <div class="stage" id="stage">
+            <div class="phone" id="phone">
+                <iframe id="frame" title="Committee screen"></iframe>
+            </div>
+        </div>
+        <script src="screens.js"></script>
+        <script>
+            const screens = [
+                ['a01', 'screens/a01-sign-in.html', 'A1 Sign in'],
+                ['a02', 'screens/a02-code.html', 'A2 Code'],
+                ['a03', 'screens/a03-overview.html', 'A3 Overview'],
+                ['a04', 'screens/a04-flats.html', 'A4 Flats'],
+                ['a05', 'screens/a05-flat.html', 'A5 Flat'],
+                ['a06', 'screens/a06-import.html', 'A6 Import'],
+                ['a07', 'screens/a07-charges.html', 'A7 Charges'],
+                ['a08', 'screens/a08-review-bills.html', 'A8 Review bills'],
+                ['a09', 'screens/a09-confirm.html', 'A9 Confirm payments'],
+                ['a10', 'screens/a10-record-payment.html', 'A10 Record a payment'],
+                ['a11', 'screens/a11-late-fees.html', 'A11 Late fees'],
+                ['a12', 'screens/a12-complaints.html', 'A12 Complaints'],
+                ['a13', 'screens/a13-polls.html', 'A13 Polls'],
+                ['a14', 'screens/a14-notices.html', 'A14 Notices'],
+                ['a15', 'screens/a15-documents.html', 'A15 Documents'],
+                ['a16', 'screens/a16-reports.html', 'A16 Reports'],
+                ['a17', 'screens/a17-history.html', 'A17 History'],
+                ['a18', 'screens/a18-settings.html', 'A18 Settings'],
+            ];
+            const byId = Object.fromEntries(screens.map((s) => [s[0], s]));
+            const frame = document.getElementById('frame');
+            const list = document.getElementById('list');
+            let current = 'a01';
+            let stack = [];
 
-screens.forEach(([id, , name]) => {
-  const b = document.createElement('button');
-  b.className = 'screen';
-  b.dataset.id = id;
-  b.textContent = name;
-  b.addEventListener('click', () => show(id));
-  list.appendChild(b);
-});
+            screens.forEach(([id, , name]) => {
+                const b = document.createElement('button');
+                b.className = 'screen';
+                b.dataset.id = id;
+                b.textContent = name;
+                b.addEventListener('click', () => show(id));
+                list.appendChild(b);
+            });
 
-function show(id) {
-  if (id === current) return;
-  stack.push(current);
-  current = id;
-  paint();
-}
-function back() {
-  if (!stack.length) return;
-  current = stack.pop();
-  paint();
-}
-function paint() {
-  const old = frame.contentDocument;
-  if (old) old.documentElement.dataset.stale = '1';
-  frame.srcdoc = SCREEN_HTML[current];
-  let spins = 0;
-  (function arm() {
-    const doc = frame.contentDocument;
-    if (doc && doc.body && doc.documentElement.dataset.stale !== '1') wire();
-    else if (spins++ < 180) requestAnimationFrame(arm);
-  })();
-  document.querySelectorAll('button.screen').forEach(b => {
-    b.classList.toggle('on', b.dataset.id === current);
-  });
-  const on = document.querySelector('button.screen.on');
-  if (on) on.scrollIntoView({ block: 'nearest' });
-}
-function label(el) {
-  return (el.innerText || '').replace(/\s+/g, ' ').trim();
-}
-function destination(el) {
-  const t = label(el);
-  if (current === 'a01' && el.id === 'send-code-btn') {
-    const input = el.ownerDocument.getElementById('mobile-number-input');
-    const digits = input ? input.value.replace(/\D/g, '') : '';
-    return digits.length === 10 ? 'a02' : null;
-  }
-  if (current === 'a02' && el.id === 'submit-btn') return el.disabled ? null : 'a03';
-  if (current === 'a02' && t.indexOf('Incorrect mobile') === 0) return 'a01';
-  if (current === 'a03') {
-    const row = el.closest('.py-space-md');
-    if (row && label(row).indexOf('Ref ') !== -1) return 'a09';
-    if (row && label(row).indexOf('Seepage') !== -1) return 'a12';
-    const note = el.closest('p');
-    if (note && label(note).indexOf('Fire NOC') === 0) return 'a15';
-  }
-  if (current === 'a04' && el.id === 'importCsvBtn') return 'a06';
-  if (current === 'a04' && el.closest('.flat-row')) return 'a05';
-  if (current === 'a06' && (t === 'Cancel' || el.id === 'save-btn')) return 'back';
-  if (current === 'a10' && t === 'Waiting') return 'a09';
-  return null;
-}
-function wire() {
-  const doc = frame.contentDocument;
-  if (!doc || doc.documentElement.dataset.wired) return;
-  doc.documentElement.dataset.wired = '1';
-  doc.addEventListener('click', (e) => {
-    const backBtn = e.target.closest('button[aria-label="Go Back"], button[aria-label="Go back"]');
-    if (backBtn) {
-      e.preventDefault();
-      e.stopPropagation();
-      back();
-      return;
-    }
-    const el = e.target.closest('a, button, .flat-row, .py-space-md, p');
-    if (!el) return;
-    const to = destination(el);
-    if (!to) return;
-    e.preventDefault();
-    e.stopPropagation();
-    if (to === 'back') back();
-    else show(to);
-  }, true);
-  doc.addEventListener('submit', (e) => {
-    if (current !== 'a01') return;
-    const input = doc.getElementById('mobile-number-input');
-    if (input && input.value.replace(/\D/g, '').length === 10) {
-      e.preventDefault();
-      e.stopPropagation();
-      show('a02');
-    }
-  }, true);
-}
-frame.addEventListener('load', wire);
-function fit() {
-  const availH = document.getElementById('stage').clientHeight - 32;
-  const availW = document.getElementById('stage').clientWidth - 32;
-  const scale = Math.min(1, availH / 844, availW / 390);
-  document.getElementById('phone').style.transform = 'scale(' + scale + ')';
-}
-window.addEventListener('resize', fit);
-paint();
-fit();
-</script>
-</body>
+            function show(id) {
+                if (id === current) return;
+                stack.push(current);
+                current = id;
+                paint();
+            }
+            function back() {
+                if (!stack.length) return;
+                current = stack.pop();
+                paint();
+            }
+            function paint() {
+                const old = frame.contentDocument;
+                if (old) old.documentElement.dataset.stale = '1';
+                frame.srcdoc = SCREEN_HTML[current];
+                let spins = 0;
+                (function arm() {
+                    const doc = frame.contentDocument;
+                    if (doc && doc.body && doc.documentElement.dataset.stale !== '1') wire();
+                    else if (spins++ < 180) requestAnimationFrame(arm);
+                })();
+                document.querySelectorAll('button.screen').forEach((b) => {
+                    b.classList.toggle('on', b.dataset.id === current);
+                });
+                const on = document.querySelector('button.screen.on');
+                if (on) on.scrollIntoView({ block: 'nearest' });
+            }
+            function label(el) {
+                return (el.innerText || '').replace(/\s+/g, ' ').trim();
+            }
+            function destination(el) {
+                const t = label(el);
+                if (current === 'a01' && el.id === 'send-code-btn') {
+                    const input = el.ownerDocument.getElementById('mobile-number-input');
+                    const digits = input ? input.value.replace(/\D/g, '') : '';
+                    return digits.length === 10 ? 'a02' : null;
+                }
+                if (current === 'a02' && el.id === 'submit-btn') return el.disabled ? null : 'a03';
+                if (current === 'a02' && t.indexOf('Incorrect mobile') === 0) return 'a01';
+                if (current === 'a03') {
+                    const row = el.closest('.py-space-md');
+                    if (row && label(row).indexOf('Ref ') !== -1) return 'a09';
+                    if (row && label(row).indexOf('Seepage') !== -1) return 'a12';
+                    const note = el.closest('p');
+                    if (note && label(note).indexOf('Fire NOC') === 0) return 'a15';
+                }
+                if (current === 'a04' && el.id === 'importCsvBtn') return 'a06';
+                if (current === 'a04' && el.closest('.flat-row')) return 'a05';
+                if (current === 'a06' && (t === 'Cancel' || el.id === 'save-btn')) return 'back';
+                if (current === 'a10' && t === 'Waiting') return 'a09';
+                return null;
+            }
+            function wire() {
+                const doc = frame.contentDocument;
+                if (!doc || doc.documentElement.dataset.wired) return;
+                doc.documentElement.dataset.wired = '1';
+                doc.addEventListener(
+                    'click',
+                    (e) => {
+                        const backBtn = e.target.closest(
+                            'button[aria-label="Go Back"], button[aria-label="Go back"]'
+                        );
+                        if (backBtn) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            back();
+                            return;
+                        }
+                        const el = e.target.closest('a, button, .flat-row, .py-space-md, p');
+                        if (!el) return;
+                        const to = destination(el);
+                        if (!to) return;
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (to === 'back') back();
+                        else show(to);
+                    },
+                    true
+                );
+                doc.addEventListener(
+                    'submit',
+                    (e) => {
+                        if (current !== 'a01') return;
+                        const input = doc.getElementById('mobile-number-input');
+                        if (input && input.value.replace(/\D/g, '').length === 10) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            show('a02');
+                        }
+                    },
+                    true
+                );
+            }
+            frame.addEventListener('load', wire);
+            function fit() {
+                const availH = document.getElementById('stage').clientHeight - 32;
+                const availW = document.getElementById('stage').clientWidth - 32;
+                const scale = Math.min(1, availH / 844, availW / 390);
+                document.getElementById('phone').style.transform = 'scale(' + scale + ')';
+            }
+            window.addEventListener('resize', fit);
+            paint();
+            fit();
+        </script>
+    </body>
 </html>

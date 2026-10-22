@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary-fixed-dim": "#cac6c2", "on-tertiary": "#ffffff", "surface-container": "#efeeeb", "error-container": "#ffdad6", "surface-container-high": "#e9e8e5", "surface-container-lowest": "#ffffff", "secondary": "#625e57", "on-secondary-fixed-variant": "#4a4640", "inverse-surface": "#2f312f", "outline": "#7a776f", "on-tertiary-fixed": "#002110", "surface": "#faf9f6", "tertiary-fixed": "#a7f3c3", "inverse-primary": "#cac6c2", "on-secondary": "#ffffff", "inverse-on-surface": "#f2f1ee", "on-error-container": "#93000a", "surface-bright": "#faf9f6", "primary": "#000000", "on-tertiary-fixed-variant": "#005230", "surface-container-highest": "#e3e2df", "secondary-fixed-dim": "#ccc5bd", "error": "#ba1a1a", "outline-variant": "#cbc6bd", "tertiary-fixed-dim": "#8cd6a8", "on-tertiary-container": "#499268", "tertiary-container": "#002110", "background": "#faf9f6", "on-primary-fixed": "#1c1b19", "tertiary": "#000000", "on-secondary-container": "#67625b", "primary-container": "#1c1b19", "on-secondary-fixed": "#1e1b16", "on-primary": "#ffffff", "secondary-fixed": "#e9e1d9", "surface-container-low": "#f4f3f0", "on-background": "#1b1c1a", "primary-fixed": "#e6e2de", "surface-variant": "#e3e2df", "secondary-container": "#e6ded6", "on-error": "#ffffff", "on-surface-variant": "#494740", "on-primary-fixed-variant": "#484644", "surface-tint": "#605e5b", "on-primary-container": "#868380", "surface-dim": "#dbdad7", "on-surface": "#1b1c1a" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "space-lg": "1.5rem", "space-md": "1rem", "gutter": "1rem", "margin": "1.5rem", "space-xl": "2.5rem" }, "fontFamily": { "headline-sm": ["Inter"], "body-md": ["Inter"], "body-lg": ["Inter"], "label-caps": ["Inter"], "amount-display": ["Inter"], "headline-lg": ["Inter"], "body-sm": ["Inter"], "title-md": ["Inter"], "label-nav": ["Inter"] }, "fontSize": { "headline-sm": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "label-caps": ["11px", { "lineHeight": "16px", "letterSpacing": "0.06em", "fontWeight": "600" }], "amount-display": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.03em", "fontWeight": "600" }], "headline-lg": ["26px", { "lineHeight": "34px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "body-sm": ["13px", { "lineHeight": "20px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "label-nav": ["11px", { "lineHeight": "14px", "fontWeight": "500" }] } } } }</script><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf9f6;color:#1b1c1a;font-family:'Inter',sans-serif;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-6 px-margin flex items-center justify-between text-on-surface"><span class="font-label-caps text-label-caps tracking-normal font-semibold">09:41</span><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px]">signal_cellular_alt</span><span class="material-symbols-outlined text-[16px]">wifi</span><span class="material-symbols-outlined text-[16px]">battery_full</span></div></div><div class="h-14 px-margin flex items-center justify-between"><div class="flex flex-col justify-center"><span class="font-label-caps text-label-caps uppercase text-on-surface-variant">FacilityCore OS</span><h1 class="font-title-md text-title-md text-on-surface tracking-tight">Bills</h1></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex flex-col relative w-full px-margin pt-20 pb-20 bg-surface"><div class="flex flex-col w-full">
+<!-- Unit Identifier & Outstanding Balance Header -->
+<div class="flex items-baseline justify-between pt-space-sm pb-space-lg">
+<div class="flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Unit Statement</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface tracking-tight mt-0.5">B-1204</h2>
+</div>
+<div class="flex flex-col items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Current Balance</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold mt-0.5">₹4,850</span>
+</div>
+</div>
+<!-- Primary Utilitarian Action for Resident Settlement -->
+<div class="flex flex-col mb-space-xl">
+<button class="w-full h-12 bg-primary text-on-primary font-title-md text-title-md rounded flex items-center justify-center active:opacity-85 transition-opacity" onclick="alert('Proceeding to UPI / Net Banking payment for ₹4,850')" type="button">
+      Pay ₹4,850
+    </button>
+<a class="mt-space-md text-center font-body-sm text-body-sm text-on-surface underline underline-offset-4 hover:opacity-80 transition-opacity" href="#">
+      Download Statement (PDF)
+    </a>
+</div>
+<!-- Section Label: Transaction Ledger -->
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-wider">Ledger Entries (FY 2024–25)</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">INR (₹)</span>
+</div>
+<!-- Ledger Rows bounded by Flat Structural Containers (No Borders Policy via Surface Color Shifts) -->
+<div class="flex flex-col bg-surface-container-low rounded">
+<!-- Row 1: March Bill (Unpaid) -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-lowest">
+<div class="flex flex-col pr-space-md">
+<span class="font-title-md text-title-md text-on-surface">March maintenance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">1 Mar 2025 · Bill #MC-2025-03</span>
+<span class="font-label-caps text-label-caps text-error uppercase font-semibold mt-1">Unpaid</span>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-title-md text-title-md text-on-surface font-semibold">₹4,850</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Due 15 Mar</span>
+</div>
+</div>
+<!-- 1px Structural Divider using Theme Color Shift -->
+<div class="h-[1px] w-full bg-surface-container-highest"></div>
+<!-- Row 2: Opening Balance -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-lowest">
+<div class="flex flex-col pr-space-md">
+<span class="font-title-md text-title-md text-on-surface">Opening balance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">1 Mar 2025 · Carry forward</span>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-title-md text-title-md text-on-surface">₹0</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Nil</span>
+</div>
+</div>
+<!-- 1px Structural Divider using Theme Color Shift -->
+<div class="h-[1px] w-full bg-surface-container-highest"></div>
+<!-- Row 3: February Bill -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-lowest text-on-surface-variant">
+<div class="flex flex-col pr-space-md">
+<span class="font-title-md text-title-md text-on-surface-variant">February maintenance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">1 Feb 2025 · Bill #MC-2025-02</span>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-title-md text-title-md text-on-surface-variant">₹4,850</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Billed</span>
+</div>
+</div>
+<!-- 1px Structural Divider using Theme Color Shift -->
+<div class="h-[1px] w-full bg-surface-container-highest"></div>
+<!-- Row 4: February Payment -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-lowest">
+<div class="flex flex-col pr-space-md">
+<span class="font-title-md text-title-md text-on-surface">Paid via UPI</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">4 Feb 2025 · Ref #UPI-849201</span>
+<span class="font-label-caps text-label-caps text-on-tertiary-container uppercase font-semibold mt-1">Paid on 04 Feb</span>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-title-md text-title-md text-on-surface font-semibold">−₹4,850</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Receipt #7102</span>
+</div>
+</div>
+<!-- 1px Structural Divider using Theme Color Shift -->
+<div class="h-[1px] w-full bg-surface-container-highest"></div>
+<!-- Row 5: January Bill -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-lowest text-on-surface-variant">
+<div class="flex flex-col pr-space-md">
+<span class="font-title-md text-title-md text-on-surface-variant">January maintenance</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">1 Jan 2025 · Bill #MC-2025-01</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase font-semibold mt-1">Paid</span>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-title-md text-title-md text-on-surface-variant">₹4,850</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Settled</span>
+</div>
+</div>
+<!-- 1px Structural Divider using Theme Color Shift -->
+<div class="h-[1px] w-full bg-surface-container-highest"></div>
+<!-- Row 6: January Payment -->
+<div class="flex items-start justify-between p-space-md bg-surface-container-lowest text-on-surface-variant">
+<div class="flex flex-col pr-space-md">
+<span class="font-title-md text-title-md text-on-surface-variant">Paid via NEFT</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">6 Jan 2025 · Ref #N0193498</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase font-semibold mt-1">Paid</span>
+</div>
+<div class="flex flex-col items-end shrink-0">
+<span class="font-title-md text-title-md text-on-surface-variant">−₹4,850</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Receipt #6841</span>
+</div>
+</div>
+</div>
+<!-- Municipal & Society Statutory Notice Footer -->
+<div class="mt-space-lg mb-space-xl p-space-md bg-surface-container-low rounded">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant shrink-0 mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Society bye-laws stipulate a late charge of 21% p.a. simple interest on dues unsettled past the 20th of every month. For billing reconciliation, contact Treasurer desk at wing B ground lobby.
+      </p>
+</div>
+</div>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]" data-active-classes="text-primary font-bold"><div class="flex justify-around items-center h-14 px-space-sm"><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-nav text-label-nav mt-0.5">Home</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] transition-colors text-primary font-bold" data-path="bills" href="#"><span class="material-symbols-outlined text-[20px]">receipt_long</span><span class="font-label-nav text-label-nav mt-0.5">Bills</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="helpdesk" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span class="font-label-nav text-label-nav mt-0.5">Help</span></a><a class="flex flex-col items-center justify-center min-w-[44px] min-h-[44px] text-on-surface-variant hover:text-on-surface transition-colors" data-path="notices" href="#"><span class="material-symbols-outlined text-[20px]">campaign</span><span class="font-label-nav text-label-nav mt-0.5">Notices</span></a></div></nav></body></html>
